@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script>(function(){var K='mp-gate',P='pundit2026';try{if(localStorage.getItem(K)===P)return;}catch(e){}var p=prompt('Mypundit 검토 페이지입니다.
+접속 비밀번호를 입력하세요.');if(p===P){try{localStorage.setItem(K,P);}catch(e){}}else{document.addEventListener('DOMContentLoaded',function(){document.body.innerHTML='<div style="font:16px/1.6 Pretendard,sans-serif;padding:60px 40px;color:#333"><b style="font-size:20px">접속 비밀번호가 맞지 않습니다.</b><br>새로고침(F5) 후 다시 입력해 주세요.</div>';});}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>대시보드 | PUNDIT Online System</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="js/mypundit.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <aside class="sidebar">
+    <button type="button" class="side-toggle" title="메뉴 접기/펼치기" aria-label="메뉴 접기/펼치기"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg></button>
+    <a class="logo" href="m_002.html"><img src="images/logo.png" alt="PUNDIT U.S. TAX SERVICES"></a>
+    <div class="side-label">신고연도</div>
+    <label class="year-select">
+      <select>
+        <option>2026년 귀속</option>
+        <option>2025년 귀속</option>
+        <option>2024년 귀속</option>
+      </select>
+    </label>
+    <nav class="nav">
+      <a href="m_002.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/></svg><span>대시보드</span></a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg><span>개인설정</span></a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="5" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg><span>내 서류함</span></a>
+    </nav>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div class="greet"><strong>안녕하세요 홍길동님</strong><span>Welcome to Pundit Online System</span></div>
+      <div class="topbar-right">
+        <div class="pill">
+          <img class="avatar" src="images/avatar_staff.png" alt="">
+          <div><b>박보검</b><span class="role">담당 세무사</span><br><span class="mail">bogum@pundit.co.kr</span></div>
+        </div>
+        <div class="pill date">
+          <b class="day">14</b>
+          <div><span>8월</span><br><b>금요일</b></div>
+        </div>
+        <div class="pill user">
+          <img class="avatar" src="images/avatar_user.png" alt="">
+          <div><b>홍길동</b><span class="role">고객</span><br><span class="mail">hongs@example.com</span></div>
+          <svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l5 5 5-5"/></svg>
+        </div>
+      </div>
+    </header>
+    <main class="content">
+      <section class="card progress">
+        <h2 class="card-title">진행사항</h2>
+        <p class="card-desc">각 진행 단계를 클릭 하면 해당 화면으로 이동하여 내용을 확인하거나 작성할 수 있습니다.</p>
+        <div class="steps">
+        <a class="step done" href="s_001_1.html"><div class="check"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 4.5"/></svg></div><div class="name">견적 확인<br>및 계약금 납부</div></a>
+        <a class="step active" href="s_001_2_1.html"><div class="num"><span>Step</span> 2</div><div class="name">워크시트 작성</div></a>
+        <a class="step active" href="s_001_3.html"><div class="num"><span>Step</span> 3</div><div class="name">자료 업로드</div></a>
+        <a class="step" href="#"><div class="num"><span>Step</span> 4</div><div class="name">담당자 검토 및<br>신고서 작성</div></a>
+        <a class="step" href="#"><div class="num"><span>Step</span> 5</div><div class="name">신고서 확인</div></a>
+        <a class="step" href="#"><div class="num"><span>Step</span> 6</div><div class="name">서명 진행</div></a>
+        <a class="step" href="#"><div class="num"><span>Step</span> 7</div><div class="name">잔금 납부</div></a>
+        <a class="step" href="#"><div class="num"><span>Step</span> 8</div><div class="name">신고서 제출 중</div></a>
+        <a class="step" href="#"><div class="num"><span>Step</span> 9</div><div class="name">신고 완료<br><small>(제출 증빙 다운로드)</small></div></a>
+        </div>
+      </section>
+      <div class="statusbar">
+        <span class="badge">신규 고객</span>
+        <span>현재 홍길동님은 <b class="blue">자료 업로드</b> 단계입니다.</span>
+        <div class="right"><span>신고 유형</span><b>DSFP</b><span>귀속 연도</span><b>2025년</b></div>
+      </div>
+      <div class="dash">
+        <div>
+          <section class="card">
+            <h2 class="card-title">작업을 완료해 주세요</h2>
+            <p class="card-desc">작업 완료 시 다음 단계로 자동 진행됩니다.</p>
+            <div class="tiles">
+              <a class="tile" href="s_001_2_1.html">
+                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h2M13 13h2M9 17h2M13 17h2"/></svg></div>
+                <div><div class="t">워크시트 작성</div><div class="d">개인정보·출입국·금융자산 등</div></div>
+                <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+              </a>
+              <a class="tile" href="s_001_3.html">
+                <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.6-7.95A6 6 0 0 1 18 8.5a4.5 4.5 0 0 1-.5 9.5H7z"/><path d="M12 12v8M9 15l3-3 3 3"/></svg></div>
+                <div><div class="t">자료 업로드</div><div class="d">구비서류를 PDF로 업로드</div></div>
+                <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+              </a>
+            </div>
+          </section>
+          <section class="card">
+            <div class="card-head">
+              <div>
+                <h2 class="card-title">담당자 공지사항</h2>
+                <p class="card-desc">담당 세무사가 올린 최신 공지입니다. 공지는 항상 한 건만 표시됩니다.</p>
+              </div>
+              <span class="msg-badge">새 공지 1건</span>
+            </div>
+            <div class="notice-one">
+              <div class="nh"><span class="cat req">요청</span><span>박보검 담당 세무사 · 오늘 09:42</span></div>
+              <p class="nt">4월 15일 이전까지 SSN만 우선 전달 부탁 드립니다.</p>
+            </div>
+          </section>
+        </div>
+        <section class="card">
+          <!-- 이 섹션의 내용(제목 포함)은 추후 결정 예정 (2026-09-02 댓글 요청으로 비움) -->
+        </section>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="l">
+        <span>서울특별시 서초구 강남대로 99길 33, 201호</span>
+        <span>문의전화: 02-6925-6054(6055)</span>
+        <span>Fax: 02-6455-6058</span>
+        <span>메일: Admin@pundit.co.kr</span>
+      </div>
+      <div class="r">Copyright © PUNDIT KOREA Co., Ltd. All Rights Reserved.</div>
+    </footer>
+  </div>
+</div>
+<!-- 수정사항 남기기 도구 (우클릭). 실제 배포 시 아래 한 줄을 지우면 됩니다. -->
+
+</body>
+</html>
