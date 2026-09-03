@@ -207,15 +207,16 @@ window.MP = (function () {
   /* 통화 선택에서 '기타'를 고르면 같은 자리에 직접 입력 칸을 연다 (금융계좌는 화면이 직접 처리) */
   function bindCurOther() {
     document.addEventListener('change', function (e) {
-      var s = e.target; if (!s || !s.matches || !s.matches('select[data-cur], select[data-g="cur"], select[data-k="cur"]')) return;
+      var s = e.target; if (!s || !s.matches || !s.matches('select[data-cur], select[data-g="cur"], select[data-k="cur"], select[data-country]')) return;
+      var isCountry = s.hasAttribute('data-country');
       var wrap = s.closest('.sel'); if (!wrap) return;
       var inp = wrap.querySelector('.cur-other');
       if (s.value === '기타') {
         if (!inp) {
-          inp = document.createElement('input'); inp.type = 'text'; inp.className = 'cur-other'; inp.placeholder = '통화 코드 직접 입력 (예: TWD)'; inp.maxLength = 12;
-          var key = s.hasAttribute('data-g') ? 'data-g' : (s.hasAttribute('data-k') ? 'data-k' : 'data-cur');
+          inp = document.createElement('input'); inp.type = 'text'; inp.className = 'cur-other'; inp.placeholder = isCountry ? 'Country name (e.g., Norway)' : '통화 코드 직접 입력 (예: TWD)'; inp.maxLength = isCountry ? 40 : 12;
+          var key = isCountry ? 'data-key' : (s.hasAttribute('data-g') ? 'data-g' : (s.hasAttribute('data-k') ? 'data-k' : 'data-cur'));
           inp.setAttribute(key, s.getAttribute(key) + 'Other');
-          inp.addEventListener('blur', function () { if (!inp.value.trim()) { wrap.classList.remove('other'); inp.remove(); s.value = ''; s.dispatchEvent(new Event('change', { bubbles: true })); } });
+          inp.addEventListener('blur', function () { if (!inp.value.trim()) { wrap.classList.remove('other'); inp.remove(); s.value = isCountry ? 'United States' : ''; s.dispatchEvent(new Event('change', { bubbles: true })); } });
           wrap.appendChild(inp);
         }
         wrap.classList.add('other'); inp.focus();

@@ -5,8 +5,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Step 2. 워크시트 작성 - 개인정보 | PUNDIT Online System</title>
-<link rel="stylesheet" href="css/style.css?v=20260903143806">
-<script src="js/mypundit.js?v=20260903143806"></script>
+<link rel="stylesheet" href="css/style.css?v=20260903145301">
+<script src="js/mypundit.js?v=20260903145301"></script>
 </head>
 <body>
 <div id="rv-banner" style="position:sticky;top:0;z-index:9000;background:#00459b;color:#fff;font:13px/1.5 Pretendard,sans-serif;padding:8px 18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap"><b>검토 방법</b><span>바꾸고 싶은 글자·버튼·입력칸·영역 위에서 <b>마우스 오른쪽 클릭</b> → 메모창이 뜹니다. 요청 내용을 적고 저장하면 그 자리에 번호 뱃지가 붙고 오른쪽 아래 <b>✎ 수정사항</b> 패널에 쌓입니다. 메모는 <b>모든 검토자와 개발사에게 바로 공유</b>됩니다(주황 = 내 메모, 파랑 = 다른 사람 메모).</span><button onclick="this.parentNode.remove()" style="margin-left:auto;background:#fff;color:#00459b;border:0;border-radius:6px;padding:4px 10px;font-weight:600;cursor:pointer">닫기</button></div>
@@ -140,11 +140,12 @@
                 <div class="radios"><button type="button" class="btn-sm addr-search" data-addr-search>주소 검색</button><label><input type="radio" name="addr_main" data-key="main.addr.kr" checked> 한국 주소</label><label><input type="radio" name="addr_main" data-key="main.addr.us"> 미국/기타국가 주소</label></div>
               </div>
               <div class="addr-grid">
-                <div class="field"><span class="lbl">시/도 <small>(State)</small></span><input type="text" placeholder="예: 서울특별시" data-key="main.addr.sido"></div>
-                <div class="field"><span class="lbl">구/군 <small>(City)</small></span><input type="text" placeholder="예: 서초구" data-key="main.addr.gu"></div>
-                <div class="field"><span class="lbl">우편번호 <small>(ZIP)</small></span><input type="text" placeholder="예: 06511" data-key="main.addr.zip"></div>
-                <div class="field road"><span class="lbl">도로명 주소 <small>(Street)</small></span><input type="text" placeholder="예: 강남대로 99길 33" data-key="main.addr.road"></div>
-                <div class="field"><span class="lbl">동/호수 <small>(Unit · 선택)</small></span><input type="text" placeholder="예: 201호 (없으면 비워 두세요)" data-key="main.addr.detail"></div>
+                <div class="field country" data-addr-country hidden><span class="lbl">Country</span><div class="sel"><select data-key="main.addr.country" data-country><option selected>United States</option><option>Canada</option><option>United Kingdom</option><option>Australia</option><option>New Zealand</option><option>Japan</option><option>China</option><option>Hong Kong</option><option>Taiwan</option><option>Singapore</option><option>Vietnam</option><option>Thailand</option><option>Philippines</option><option>Malaysia</option><option>Indonesia</option><option>India</option><option>Germany</option><option>France</option><option>Italy</option><option>Spain</option><option>Netherlands</option><option>Switzerland</option><option>Sweden</option><option>United Arab Emirates</option><option>Mexico</option><option>Brazil</option><option>기타</option></select></div></div>
+                <div class="field" data-kr-lbl="시/도 <small>(State)</small>" data-en-lbl="State / Province" data-kr-ph="예: 서울특별시" data-en-ph="e.g., California"><span class="lbl">시/도 <small>(State)</small></span><input type="text" placeholder="예: 서울특별시" data-key="main.addr.sido"></div>
+                <div class="field" data-kr-lbl="구/군 <small>(City)</small>" data-en-lbl="City" data-kr-ph="예: 서초구" data-en-ph="e.g., Los Angeles"><span class="lbl">구/군 <small>(City)</small></span><input type="text" placeholder="예: 서초구" data-key="main.addr.gu"></div>
+                <div class="field" data-kr-lbl="우편번호 <small>(ZIP)</small>" data-en-lbl="ZIP / Postal code" data-kr-ph="예: 06511" data-en-ph="e.g., 90012"><span class="lbl">우편번호 <small>(ZIP)</small></span><input type="text" placeholder="예: 06511" data-key="main.addr.zip"></div>
+                <div class="field road" data-kr-lbl="도로명 주소 <small>(Street)</small>" data-en-lbl="Street address" data-kr-ph="예: 강남대로 99길 33" data-en-ph="e.g., 123 Main St"><span class="lbl">도로명 주소 <small>(Street)</small></span><input type="text" placeholder="예: 강남대로 99길 33" data-key="main.addr.road"></div>
+                <div class="field" data-kr-lbl="동/호수 <small>(Unit · 선택)</small>" data-en-lbl="Apt / Unit <small>(optional)</small>" data-kr-ph="예: 201호 (없으면 비워 두세요)" data-en-ph="e.g., Apt 4B (optional)"><span class="lbl">동/호수 <small>(Unit · 선택)</small></span><input type="text" placeholder="예: 201호 (없으면 비워 두세요)" data-key="main.addr.detail"></div>
               </div>
             </div>
             <div class="field"><span class="lbl">이민법상 미국신분</span>
@@ -194,11 +195,12 @@
                 <div class="radios"><button type="button" class="btn-sm addr-search" data-addr-search>주소 검색</button><button type="button" class="btn-sm copy" data-copy="addr">주신고인과 주소 같음</button><label><input type="radio" name="addr_spouse" data-key="spouse.addr.kr" checked> 한국 주소</label><label><input type="radio" name="addr_spouse" data-key="spouse.addr.us"> 미국/기타국가 주소</label></div>
               </div>
               <div class="addr-grid">
-                <div class="field"><span class="lbl">시/도 <small>(State)</small></span><input type="text" placeholder="예: 서울특별시" data-key="spouse.addr.sido"></div>
-                <div class="field"><span class="lbl">구/군 <small>(City)</small></span><input type="text" placeholder="예: 서초구" data-key="spouse.addr.gu"></div>
-                <div class="field"><span class="lbl">우편번호 <small>(ZIP)</small></span><input type="text" placeholder="예: 06511" data-key="spouse.addr.zip"></div>
-                <div class="field road"><span class="lbl">도로명 주소 <small>(Street)</small></span><input type="text" placeholder="예: 강남대로 99길 33" data-key="spouse.addr.road"></div>
-                <div class="field"><span class="lbl">동/호수 <small>(Unit · 선택)</small></span><input type="text" placeholder="예: 201호 (없으면 비워 두세요)" data-key="spouse.addr.detail"></div>
+                <div class="field country" data-addr-country hidden><span class="lbl">Country</span><div class="sel"><select data-key="spouse.addr.country" data-country><option selected>United States</option><option>Canada</option><option>United Kingdom</option><option>Australia</option><option>New Zealand</option><option>Japan</option><option>China</option><option>Hong Kong</option><option>Taiwan</option><option>Singapore</option><option>Vietnam</option><option>Thailand</option><option>Philippines</option><option>Malaysia</option><option>Indonesia</option><option>India</option><option>Germany</option><option>France</option><option>Italy</option><option>Spain</option><option>Netherlands</option><option>Switzerland</option><option>Sweden</option><option>United Arab Emirates</option><option>Mexico</option><option>Brazil</option><option>기타</option></select></div></div>
+                <div class="field" data-kr-lbl="시/도 <small>(State)</small>" data-en-lbl="State / Province" data-kr-ph="예: 서울특별시" data-en-ph="e.g., California"><span class="lbl">시/도 <small>(State)</small></span><input type="text" placeholder="예: 서울특별시" data-key="spouse.addr.sido"></div>
+                <div class="field" data-kr-lbl="구/군 <small>(City)</small>" data-en-lbl="City" data-kr-ph="예: 서초구" data-en-ph="e.g., Los Angeles"><span class="lbl">구/군 <small>(City)</small></span><input type="text" placeholder="예: 서초구" data-key="spouse.addr.gu"></div>
+                <div class="field" data-kr-lbl="우편번호 <small>(ZIP)</small>" data-en-lbl="ZIP / Postal code" data-kr-ph="예: 06511" data-en-ph="e.g., 90012"><span class="lbl">우편번호 <small>(ZIP)</small></span><input type="text" placeholder="예: 06511" data-key="spouse.addr.zip"></div>
+                <div class="field road" data-kr-lbl="도로명 주소 <small>(Street)</small>" data-en-lbl="Street address" data-kr-ph="예: 강남대로 99길 33" data-en-ph="e.g., 123 Main St"><span class="lbl">도로명 주소 <small>(Street)</small></span><input type="text" placeholder="예: 강남대로 99길 33" data-key="spouse.addr.road"></div>
+                <div class="field" data-kr-lbl="동/호수 <small>(Unit · 선택)</small>" data-en-lbl="Apt / Unit <small>(optional)</small>" data-kr-ph="예: 201호 (없으면 비워 두세요)" data-en-ph="e.g., Apt 4B (optional)"><span class="lbl">동/호수 <small>(Unit · 선택)</small></span><input type="text" placeholder="예: 201호 (없으면 비워 두세요)" data-key="spouse.addr.detail"></div>
               </div>
             </div>
             <div class="field"><span class="lbl">이민법상 미국신분</span>
@@ -250,11 +252,12 @@
                 <div class="radios"><button type="button" class="btn-sm addr-search" data-addr-search>주소 검색</button><button type="button" class="btn-sm copy" data-copy="addr">주신고인과 주소 같음</button><label><input type="radio" name="addr_dep__N__" data-key="dep.addr.kr" checked> 한국 주소</label><label><input type="radio" name="addr_dep__N__" data-key="dep.addr.us"> 미국/기타국가 주소</label></div>
               </div>
               <div class="addr-grid">
-                <div class="field"><span class="lbl">시/도 <small>(State)</small></span><input type="text" placeholder="예: 서울특별시" data-key="dep.addr.sido"></div>
-                <div class="field"><span class="lbl">구/군 <small>(City)</small></span><input type="text" placeholder="예: 서초구" data-key="dep.addr.gu"></div>
-                <div class="field"><span class="lbl">우편번호 <small>(ZIP)</small></span><input type="text" placeholder="예: 06511" data-key="dep.addr.zip"></div>
-                <div class="field road"><span class="lbl">도로명 주소 <small>(Street)</small></span><input type="text" placeholder="예: 강남대로 99길 33" data-key="dep.addr.road"></div>
-                <div class="field"><span class="lbl">동/호수 <small>(Unit · 선택)</small></span><input type="text" placeholder="예: 201호 (없으면 비워 두세요)" data-key="dep.addr.detail"></div>
+                <div class="field country" data-addr-country hidden><span class="lbl">Country</span><div class="sel"><select data-key="dep.addr.country" data-country><option selected>United States</option><option>Canada</option><option>United Kingdom</option><option>Australia</option><option>New Zealand</option><option>Japan</option><option>China</option><option>Hong Kong</option><option>Taiwan</option><option>Singapore</option><option>Vietnam</option><option>Thailand</option><option>Philippines</option><option>Malaysia</option><option>Indonesia</option><option>India</option><option>Germany</option><option>France</option><option>Italy</option><option>Spain</option><option>Netherlands</option><option>Switzerland</option><option>Sweden</option><option>United Arab Emirates</option><option>Mexico</option><option>Brazil</option><option>기타</option></select></div></div>
+                <div class="field" data-kr-lbl="시/도 <small>(State)</small>" data-en-lbl="State / Province" data-kr-ph="예: 서울특별시" data-en-ph="e.g., California"><span class="lbl">시/도 <small>(State)</small></span><input type="text" placeholder="예: 서울특별시" data-key="dep.addr.sido"></div>
+                <div class="field" data-kr-lbl="구/군 <small>(City)</small>" data-en-lbl="City" data-kr-ph="예: 서초구" data-en-ph="e.g., Los Angeles"><span class="lbl">구/군 <small>(City)</small></span><input type="text" placeholder="예: 서초구" data-key="dep.addr.gu"></div>
+                <div class="field" data-kr-lbl="우편번호 <small>(ZIP)</small>" data-en-lbl="ZIP / Postal code" data-kr-ph="예: 06511" data-en-ph="e.g., 90012"><span class="lbl">우편번호 <small>(ZIP)</small></span><input type="text" placeholder="예: 06511" data-key="dep.addr.zip"></div>
+                <div class="field road" data-kr-lbl="도로명 주소 <small>(Street)</small>" data-en-lbl="Street address" data-kr-ph="예: 강남대로 99길 33" data-en-ph="e.g., 123 Main St"><span class="lbl">도로명 주소 <small>(Street)</small></span><input type="text" placeholder="예: 강남대로 99길 33" data-key="dep.addr.road"></div>
+                <div class="field" data-kr-lbl="동/호수 <small>(Unit · 선택)</small>" data-en-lbl="Apt / Unit <small>(optional)</small>" data-kr-ph="예: 201호 (없으면 비워 두세요)" data-en-ph="e.g., Apt 4B (optional)"><span class="lbl">동/호수 <small>(Unit · 선택)</small></span><input type="text" placeholder="예: 201호 (없으면 비워 두세요)" data-key="dep.addr.detail"></div>
               </div>
             </div>
             <div class="field"><span class="lbl">이민법상 미국신분</span>
@@ -361,11 +364,22 @@
               var b = e.target.closest('[data-addr-search]'); if (!b) return;
               var f = b.closest('.field.full'); MP.openAddr(function (a) { fillAddr(f, a); });
             });
+            /* 한국 주소 ↔ 미국/기타국가 주소: 라벨·안내문 전환, Country 선택 표시 */
+            function applyAddrMode(f) {
+              var kr = f.querySelector('[data-key$=".addr.kr"]').checked, b = f.querySelector('[data-addr-search]'), c = f.querySelector('[data-addr-country]');
+              if (b) b.hidden = !kr; if (c) c.hidden = kr;
+              f.querySelectorAll('.addr-grid .field[data-en-lbl]').forEach(function (fd) {
+                fd.querySelector('.lbl').innerHTML = kr ? fd.dataset.krLbl : fd.dataset.enLbl;
+                fd.querySelector('input').placeholder = kr ? fd.dataset.krPh : fd.dataset.enPh;
+              });
+            }
             root.addEventListener('change', function (e) {
               var k = e.target.dataset.key || ''; if (!/\.addr\.(kr|us)$/.test(k)) return;
-              var f = e.target.closest('.field.full'), kr = f.querySelector('[data-key$=".addr.kr"]').checked, b = f.querySelector('[data-addr-search]');
-              if (b) b.hidden = !kr;
+              applyAddrMode(e.target.closest('.field.full'));
             });
+            function applyAllAddr() { root.querySelectorAll('[data-addr-search]').forEach(function (b) { applyAddrMode(b.closest('.field.full')); }); }
+            setTimeout(applyAllAddr, 0);
+            window.__applyAllAddr = applyAllAddr;
             window.__fillAddr = fillAddr;
             /* 발행주가 NY면 Document Number 칸을 연다 */
             root.addEventListener('change', function (e) {
@@ -413,6 +427,6 @@
   </div>
 </div>
 <!-- 수정사항 남기기 도구 (우클릭). 실제 배포 시 아래 한 줄을 지우면 됩니다. -->
-<script src="js/feedback.js?v=20260903143806"></script>
+<script src="js/feedback.js?v=20260903145301"></script>
 </body>
 </html>
