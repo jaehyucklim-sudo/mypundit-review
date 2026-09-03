@@ -776,3 +776,6 @@ input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--blue); m
 .addr-box .h .muted { font-size: 13px; font-weight: 400; }
 .addr-box .h .x { margin-left: auto; border: 0; background: none; font-size: 24px; line-height: 1; cursor: pointer; color: #666; }
 .addr-box .b { flex: 1; min-height: 0; }
+
+/* 날짜 형식 오류 */
+input.bad-date, .field input.bad-date, .acct input.bad-date { border-color: #c8401a !important; color: #c8401a; background: #fff6f4; }

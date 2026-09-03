@@ -5,8 +5,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Step 2. 워크시트 작성 - 임대부동산 자산 | PUNDIT Online System</title>
-<link rel="stylesheet" href="css/style.css?v=20260903143658">
-<script src="js/mypundit.js?v=20260903143658"></script>
+<link rel="stylesheet" href="css/style.css?v=20260903143806">
+<script src="js/mypundit.js?v=20260903143806"></script>
 </head>
 <body>
 <div id="rv-banner" style="position:sticky;top:0;z-index:9000;background:#00459b;color:#fff;font:13px/1.5 Pretendard,sans-serif;padding:8px 18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap"><b>검토 방법</b><span>바꾸고 싶은 글자·버튼·입력칸·영역 위에서 <b>마우스 오른쪽 클릭</b> → 메모창이 뜹니다. 요청 내용을 적고 저장하면 그 자리에 번호 뱃지가 붙고 오른쪽 아래 <b>✎ 수정사항</b> 패널에 쌓입니다. 메모는 <b>모든 검토자와 개발사에게 바로 공유</b>됩니다(주황 = 내 메모, 파랑 = 다른 사람 메모).</span><button onclick="this.parentNode.remove()" style="margin-left:auto;background:#fff;color:#00459b;border:0;border-radius:6px;padding:4px 10px;font-weight:600;cursor:pointer">닫기</button></div>
@@ -132,8 +132,8 @@
             <div class="field"><span class="lbl">지분율 (단독 소유가 아닐 시)</span><input type="text" placeholder="예: 50%"></div>
             <div class="field"><span class="lbl">부동산 종류</span><div class="sel"><select><option value="">종류 선택</option><option>아파트</option><option>단독주택</option><option>오피스텔</option><option>상가</option><option>토지</option><option>기타</option></select></div></div>
             <div class="field full"><span class="lbl">주소 (우편번호 포함 전체주소)</span><input type="text" placeholder="우편번호와 도로명, 건물명, 동/호수까지 입력"></div>
-            <div class="field"><span class="lbl">취득년월일</span><div class="date"><input type="text" placeholder="연도. 월. 일"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div></div>
-            <div class="field"><span class="lbl">임대시작 날짜</span><div class="date"><input type="text" placeholder="연도. 월. 일"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div></div>
+            <div class="field"><span class="lbl">취득년월일</span><div class="date"><input type="text" class="dt" placeholder="YYYY.MM.DD"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div></div>
+            <div class="field"><span class="lbl">임대시작 날짜</span><div class="date"><input type="text" class="dt" placeholder="YYYY.MM.DD"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div></div>
                   <div class="field"><span class="lbl">건물 취득가격 <small>(통화는 토지·수익·비용에 함께 적용)</small><span class="help" data-tip="토지 가격을 모를 시 건물가격에 모두 기입해 주세요." title="토지 가격을 모를 시 건물가격에 모두 기입해 주세요.">?</span></span><div class="cur-row"><div class="sel"><select data-cur="bld"><option selected>KRW</option><option>USD</option><option>JPY</option><option>CNY</option><option>EUR</option><option>GBP</option><option>HKD</option><option>SGD</option><option>AUD</option><option>CAD</option><option>기타</option></select></div><div class="unit"><input type="text" placeholder="00" data-bld></div></div></div>
                   <div class="field"><div class="lbl-row"><span class="lbl">토지 취득가격</span><label class="chkline small"><input type="checkbox" data-unknown="land"> 모름</label></div><div class="unit"><input type="text" placeholder="00" data-land></div></div>
                   <div class="field full"><span class="lbl">전달사항 <small>(선택)</small></span><textarea rows="2" data-memo placeholder="담당자에게 알릴 내용을 적어 주세요. 예: 부부 공동명의입니다 / 2025년 6월에 매도했습니다 / 지분 50%는 배우자 소유"></textarea></div>
@@ -257,6 +257,6 @@
   </div>
 </div>
 <!-- 수정사항 남기기 도구 (우클릭). 실제 배포 시 아래 한 줄을 지우면 됩니다. -->
-<script src="js/feedback.js?v=20260903143658"></script>
+<script src="js/feedback.js?v=20260903143806"></script>
 </body>
 </html>

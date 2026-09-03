@@ -5,8 +5,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Step 2. 워크시트 작성 - PFIC | PUNDIT Online System</title>
-<link rel="stylesheet" href="css/style.css?v=20260903143658">
-<script src="js/mypundit.js?v=20260903143658"></script>
+<link rel="stylesheet" href="css/style.css?v=20260903143806">
+<script src="js/mypundit.js?v=20260903143806"></script>
 </head>
 <body>
 <div id="rv-banner" style="position:sticky;top:0;z-index:9000;background:#00459b;color:#fff;font:13px/1.5 Pretendard,sans-serif;padding:8px 18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap"><b>검토 방법</b><span>바꾸고 싶은 글자·버튼·입력칸·영역 위에서 <b>마우스 오른쪽 클릭</b> → 메모창이 뜹니다. 요청 내용을 적고 저장하면 그 자리에 번호 뱃지가 붙고 오른쪽 아래 <b>✎ 수정사항</b> 패널에 쌓입니다. 메모는 <b>모든 검토자와 개발사에게 바로 공유</b>됩니다(주황 = 내 메모, 파랑 = 다른 사람 메모).</span><button onclick="this.parentNode.remove()" style="margin-left:auto;background:#fff;color:#00459b;border:0;border-radius:6px;padding:4px 10px;font-weight:600;cursor:pointer">닫기</button></div>
@@ -134,12 +134,12 @@
             var SPEC = {
               cols: [
                 { k: 'name', l: '종목명', w: 190, ph: '예: TIGER 미국S&P500' },
-                { k: 'buy', l: '최초취득일/매수일', sub: '연/월/일', type: 'date', ph: '예: 2025/03/15' },
+                { k: 'buy', l: '최초취득일/매수일', sub: '연/월/일', type: 'date', ph: 'YYYY.MM.DD' },
                 { k: 'qty', l: '취득수량', type: 'num', ph: '매수한 수량' },
                 { k: 'price', l: '취득단가', type: 'num', ph: '매수 단가' },
                 { k: 'cost', l: '총 취득단가', sub: '자동 계산', type: 'calc' },
                 { k: 'status', l: '구분', type: 'select', opts: ['보유중', '일부매도', '전량매도'] },
-                { k: 'sell', l: '매도일', sub: '매도한 경우만', type: 'date', ph: '예: 2025/08/20' },
+                { k: 'sell', l: '매도일', sub: '매도한 경우만', type: 'date', ph: 'YYYY.MM.DD' },
                 { k: 'sqty', l: '매도수량', sub: '매도한 경우만', type: 'num', ph: '0' },
                 { k: 'sprice', l: '매도가', type: 'num', ph: '매도 단가' },
                 { k: 'proc', l: '총 매도가', sub: '자동 계산', type: 'calc' },
@@ -180,6 +180,6 @@
   </div>
 </div>
 <!-- 수정사항 남기기 도구 (우클릭). 실제 배포 시 아래 한 줄을 지우면 됩니다. -->
-<script src="js/feedback.js?v=20260903143658"></script>
+<script src="js/feedback.js?v=20260903143806"></script>
 </body>
 </html>

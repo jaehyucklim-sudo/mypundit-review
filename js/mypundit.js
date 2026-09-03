@@ -58,7 +58,7 @@ window.MP = (function () {
     var k = ' data-k="' + c.k + '"';
     if (c.type === 'select') return '<div class="sel"><select' + k + '><option value="">' + esc(c.ph || '선택') + '</option>' + (c.opts || []).map(function (o) { return '<option>' + esc(o) + '</option>'; }).join('') + '</select></div>';
     if (c.type === 'calc' || c.type === 'ro') return '<input type="text"' + k + ' readonly tabindex="-1" class="ro" placeholder="' + esc(c.ph || (c.type === 'calc' ? '자동 계산' : '')) + '">';
-    if (c.type === 'date') return '<input type="text"' + k + ' placeholder="' + esc(c.ph || '연도. 월. 일') + '">';
+    if (c.type === 'date') return '<input type="text" class="dt"' + k + ' placeholder="' + esc(c.ph || 'YYYY.MM.DD') + '">';
     return '<input type="text"' + k + ' placeholder="' + esc(c.ph || '') + '">';
   }
   function tableHTML(spec) {
@@ -222,7 +222,29 @@ window.MP = (function () {
       } else if (inp) { wrap.classList.remove('other'); inp.remove(); }
     });
   }
-  function onReady() { bindFolds(); bindSide(); bindNA(); bindMoney(); bindCurOther(); }
+  /* 날짜 칸 통일: 2025-03-10 / 2025/3/10 / 20250310 / 2025년 3월 10일 → 2025.03.10, 잘못된 날짜는 빨간 표시 */
+  var DATE_SEL = 'input.dt, .date input';
+  function parseAnyDate(t) {
+    t = String(t || '').trim(); if (!t) return { empty: true };
+    var m = t.match(/^(\d{4})\D*(\d{1,2})\D*(\d{1,2})\D*$/);
+    if (!m) return { bad: true };
+    var y = +m[1], mo = +m[2], d = +m[3], dt = new Date(y, mo - 1, d);
+    if (y < 1900 || y > 2100 || isNaN(dt) || dt.getMonth() !== mo - 1 || dt.getDate() !== d) return { bad: true };
+    function p(n) { return (n < 10 ? '0' : '') + n; }
+    return { text: y + '.' + p(mo) + '.' + p(d) };
+  }
+  function normDate(el) {
+    var r = parseAnyDate(el.value);
+    el.classList.toggle('bad-date', !!r.bad);
+    el.title = r.bad ? '날짜 형식을 확인해 주세요 (예: 2025.03.10)' : '';
+    if (r.text && r.text !== el.value) { el.value = r.text; el.dispatchEvent(new Event('input', { bubbles: true })); }
+  }
+  function bindDates() {
+    document.addEventListener('change', function (e) { var el = e.target; if (el && el.matches && el.matches(DATE_SEL)) normDate(el); });
+    document.addEventListener('blur', function (e) { var el = e.target; if (el && el.matches && el.matches(DATE_SEL)) normDate(el); }, true);
+    document.addEventListener('input', function (e) { var el = e.target; if (el && el.matches && el.matches(DATE_SEL) && el.classList.contains('bad-date')) { var r = parseAnyDate(el.value); if (!r.bad) { el.classList.remove('bad-date'); el.title = ''; } } });
+  }
+  function onReady() { bindFolds(); bindSide(); bindNA(); bindMoney(); bindCurOther(); bindDates(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', onReady); else onReady();
 
   /* ---------- 한국 주소 검색 (카카오 우편번호 서비스, 키 불필요) ---------- */
