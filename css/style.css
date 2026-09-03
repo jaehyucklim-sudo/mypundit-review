@@ -753,3 +753,7 @@ input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--blue); m
 /* 임대부동산 수익·비용: 통화 선택 위치 */
 .ledger-tools { display: flex; justify-content: flex-end; margin: 0 0 10px; }
 .ytabs .cur-pick { margin-left: auto; }
+
+/* 부동산 전달사항 */
+.field textarea[data-memo] { width: 100%; min-height: 72px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 8px; font: inherit; font-size: 15px; line-height: 1.5; resize: vertical; background: #fff; }
+.field textarea[data-memo]:focus { outline: none; border-color: var(--blue); }
