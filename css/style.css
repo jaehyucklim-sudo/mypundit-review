@@ -766,3 +766,13 @@ input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--blue); m
 .copy-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; margin: 18px 0 4px; font-size: 13px; }
 .copy-bar .btn-sm.copy { border-color: var(--blue); color: var(--blue); font-weight: 600; }
 .copy-bar .btn-sm.copy:hover { background: var(--blue); color: #fff; }
+
+/* 한국 주소 검색 */
+.radios .addr-search { border-color: var(--blue); color: var(--blue); font-weight: 600; margin-right: 6px; }
+.radios .addr-search:hover { background: var(--blue); color: #fff; }
+.addr-modal { position: fixed; inset: 0; z-index: 2000; background: rgba(10, 22, 45, .5); display: flex; align-items: center; justify-content: center; }
+.addr-box { width: min(560px, 94vw); height: min(600px, 88vh); background: #fff; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 24px 60px rgba(0, 0, 0, .35); }
+.addr-box .h { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); font-weight: 700; flex: none; }
+.addr-box .h .muted { font-size: 13px; font-weight: 400; }
+.addr-box .h .x { margin-left: auto; border: 0; background: none; font-size: 24px; line-height: 1; cursor: pointer; color: #666; }
+.addr-box .b { flex: 1; min-height: 0; }

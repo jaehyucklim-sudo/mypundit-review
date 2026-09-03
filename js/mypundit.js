@@ -225,5 +225,34 @@ window.MP = (function () {
   function onReady() { bindFolds(); bindSide(); bindNA(); bindMoney(); bindCurOther(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', onReady); else onReady();
 
-  return { KEY: KEY, esc: esc, people: people, label: label, personTabs: personTabs, grid: grid, addRow: addRow, rowData: rowData, num: num, fmt: fmt, yearTabs: yearTabs, seg: seg, notes: notes };
+  /* ---------- 한국 주소 검색 (카카오 우편번호 서비스, 키 불필요) ---------- */
+  var PC_SRC = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js', pcQueue = [], pcLoading = false;
+  function loadPostcode(cb) {
+    if (window.daum && window.daum.Postcode) return cb();
+    pcQueue.push(cb); if (pcLoading) return; pcLoading = true;
+    var s = document.createElement('script'); s.src = PC_SRC; s.async = true;
+    s.onload = function () { var q = pcQueue; pcQueue = []; pcLoading = false; q.forEach(function (f) { f(); }); };
+    s.onerror = function () { pcQueue = []; pcLoading = false; alert('주소 검색 서비스를 불러오지 못했습니다.\n이 미리보기 화면은 외부 접속이 막혀 있을 수 있습니다. 실제 사이트에서는 정상 동작합니다.'); };
+    document.head.appendChild(s);
+  }
+  /* onDone({ sido, gu, zip, road, building }) */
+  function openAddr(onDone) {
+    loadPostcode(function () {
+      var m = document.createElement('div'); m.className = 'addr-modal';
+      m.innerHTML = '<div class="addr-box"><div class="h">주소 검색<span class="muted">도로명·지번·건물명으로 찾으세요</span><button type="button" class="x" aria-label="닫기">×</button></div><div class="b"></div></div>';
+      document.body.appendChild(m);
+      function close() { m.remove(); }
+      m.querySelector('.x').addEventListener('click', close);
+      m.addEventListener('mousedown', function (e) { if (e.target === m) close(); });
+      new window.daum.Postcode({
+        width: '100%', height: '100%',
+        oncomplete: function (d) {
+          var road = d.roadAddress || d.jibunAddress || d.address || '';
+          onDone({ sido: d.sido || '', gu: d.sigungu || '', zip: d.zonecode || '', road: road, building: d.buildingName || '' });
+          close();
+        }
+      }).embed(m.querySelector('.b'));
+    });
+  }
+  return { KEY: KEY, esc: esc, people: people, label: label, personTabs: personTabs, grid: grid, addRow: addRow, rowData: rowData, num: num, fmt: fmt, yearTabs: yearTabs, seg: seg, notes: notes, openAddr: openAddr };
 })();

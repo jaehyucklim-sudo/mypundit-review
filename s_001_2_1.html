@@ -5,8 +5,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Step 2. 워크시트 작성 - 개인정보 | PUNDIT Online System</title>
-<link rel="stylesheet" href="css/style.css?v=20260903143517">
-<script src="js/mypundit.js?v=20260903143517"></script>
+<link rel="stylesheet" href="css/style.css?v=20260903143658">
+<script src="js/mypundit.js?v=20260903143658"></script>
 </head>
 <body>
 <div id="rv-banner" style="position:sticky;top:0;z-index:9000;background:#00459b;color:#fff;font:13px/1.5 Pretendard,sans-serif;padding:8px 18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap"><b>검토 방법</b><span>바꾸고 싶은 글자·버튼·입력칸·영역 위에서 <b>마우스 오른쪽 클릭</b> → 메모창이 뜹니다. 요청 내용을 적고 저장하면 그 자리에 번호 뱃지가 붙고 오른쪽 아래 <b>✎ 수정사항</b> 패널에 쌓입니다. 메모는 <b>모든 검토자와 개발사에게 바로 공유</b>됩니다(주황 = 내 메모, 파랑 = 다른 사람 메모).</span><button onclick="this.parentNode.remove()" style="margin-left:auto;background:#fff;color:#00459b;border:0;border-radius:6px;padding:4px 10px;font-weight:600;cursor:pointer">닫기</button></div>
@@ -137,7 +137,7 @@
             <div class="field"><span class="lbl">직장주소 <small>(선택)</small></span><input type="text" placeholder="직장 주소 입력"></div>
             <div class="field full">
               <div class="lbl-row"><span class="lbl">주소 (한국 또는 미국/기타국가 중 한 가지만 입력)</span>
-                <div class="radios"><label><input type="radio" name="addr_main" data-key="main.addr.kr" checked> 한국 주소</label><label><input type="radio" name="addr_main" data-key="main.addr.us"> 미국/기타국가 주소</label></div>
+                <div class="radios"><button type="button" class="btn-sm addr-search" data-addr-search>주소 검색</button><label><input type="radio" name="addr_main" data-key="main.addr.kr" checked> 한국 주소</label><label><input type="radio" name="addr_main" data-key="main.addr.us"> 미국/기타국가 주소</label></div>
               </div>
               <div class="addr-grid">
                 <div class="field"><span class="lbl">시/도 <small>(State)</small></span><input type="text" placeholder="예: 서울특별시" data-key="main.addr.sido"></div>
@@ -191,7 +191,7 @@
             <div class="field"><span class="lbl">직장주소 <small>(선택)</small></span><input type="text" placeholder="직장 주소 입력"></div>
             <div class="field full">
               <div class="lbl-row"><span class="lbl">주소 (한국 또는 미국/기타국가 중 한 가지만 입력)</span>
-                <div class="radios"><button type="button" class="btn-sm copy" data-copy="addr">주신고인과 주소 같음</button><label><input type="radio" name="addr_spouse" data-key="spouse.addr.kr" checked> 한국 주소</label><label><input type="radio" name="addr_spouse" data-key="spouse.addr.us"> 미국/기타국가 주소</label></div>
+                <div class="radios"><button type="button" class="btn-sm addr-search" data-addr-search>주소 검색</button><button type="button" class="btn-sm copy" data-copy="addr">주신고인과 주소 같음</button><label><input type="radio" name="addr_spouse" data-key="spouse.addr.kr" checked> 한국 주소</label><label><input type="radio" name="addr_spouse" data-key="spouse.addr.us"> 미국/기타국가 주소</label></div>
               </div>
               <div class="addr-grid">
                 <div class="field"><span class="lbl">시/도 <small>(State)</small></span><input type="text" placeholder="예: 서울특별시" data-key="spouse.addr.sido"></div>
@@ -247,7 +247,7 @@
             <div class="field"><span class="lbl">직장주소 <small>(선택)</small></span><input type="text" placeholder="직장 주소 입력"></div>
             <div class="field full">
               <div class="lbl-row"><span class="lbl">주소 (한국 또는 미국/기타국가 중 한 가지만 입력)</span>
-                <div class="radios"><button type="button" class="btn-sm copy" data-copy="addr">주신고인과 주소 같음</button><label><input type="radio" name="addr_dep__N__" data-key="dep.addr.kr" checked> 한국 주소</label><label><input type="radio" name="addr_dep__N__" data-key="dep.addr.us"> 미국/기타국가 주소</label></div>
+                <div class="radios"><button type="button" class="btn-sm addr-search" data-addr-search>주소 검색</button><button type="button" class="btn-sm copy" data-copy="addr">주신고인과 주소 같음</button><label><input type="radio" name="addr_dep__N__" data-key="dep.addr.kr" checked> 한국 주소</label><label><input type="radio" name="addr_dep__N__" data-key="dep.addr.us"> 미국/기타국가 주소</label></div>
               </div>
               <div class="addr-grid">
                 <div class="field"><span class="lbl">시/도 <small>(State)</small></span><input type="text" placeholder="예: 서울특별시" data-key="dep.addr.sido"></div>
@@ -351,6 +351,22 @@
               }
             });
             root.addEventListener('input', function (e) { if (e.target.hasAttribute('data-key')) { renumber(); save(); } });
+            /* 한국 주소 검색: 카카오 우편번호 서비스로 시/도·구/군·우편번호·도로명 자동 채움 */
+            function fillAddr(f, a) {
+              function put(suffix, v) { var el = f.querySelector('[data-key$=".addr.' + suffix + '"]'); if (el) { el.value = v; el.dispatchEvent(new Event('input', { bubbles: true })); } }
+              put('sido', a.sido); put('gu', a.gu); put('zip', a.zip); put('road', a.road + (a.building ? ' (' + a.building + ')' : ''));
+              var d = f.querySelector('[data-key$=".addr.detail"]'); if (d) d.focus();
+            }
+            root.addEventListener('click', function (e) {
+              var b = e.target.closest('[data-addr-search]'); if (!b) return;
+              var f = b.closest('.field.full'); MP.openAddr(function (a) { fillAddr(f, a); });
+            });
+            root.addEventListener('change', function (e) {
+              var k = e.target.dataset.key || ''; if (!/\.addr\.(kr|us)$/.test(k)) return;
+              var f = e.target.closest('.field.full'), kr = f.querySelector('[data-key$=".addr.kr"]').checked, b = f.querySelector('[data-addr-search]');
+              if (b) b.hidden = !kr;
+            });
+            window.__fillAddr = fillAddr;
             /* 발행주가 NY면 Document Number 칸을 연다 */
             root.addEventListener('change', function (e) {
               var st = e.target; if (!st.hasAttribute('data-state')) return;
@@ -397,6 +413,6 @@
   </div>
 </div>
 <!-- 수정사항 남기기 도구 (우클릭). 실제 배포 시 아래 한 줄을 지우면 됩니다. -->
-<script src="js/feedback.js?v=20260903143517"></script>
+<script src="js/feedback.js?v=20260903143658"></script>
 </body>
 </html>
