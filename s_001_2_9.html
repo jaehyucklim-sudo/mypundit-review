@@ -5,8 +5,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Step 2. 워크시트 작성 - 부동산 매매 | PUNDIT Online System</title>
-<link rel="stylesheet" href="css/style.css?v=20260903134251">
-<script src="js/mypundit.js?v=20260903134251"></script>
+<link rel="stylesheet" href="css/style.css?v=20260903134751">
+<script src="js/mypundit.js?v=20260903134751"></script>
 </head>
 <body>
 <div id="rv-banner" style="position:sticky;top:0;z-index:9000;background:#00459b;color:#fff;font:13px/1.5 Pretendard,sans-serif;padding:8px 18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap"><b>검토 방법</b><span>바꾸고 싶은 글자·버튼·입력칸·영역 위에서 <b>마우스 오른쪽 클릭</b> → 메모창이 뜹니다. 요청 내용을 적고 저장하면 그 자리에 번호 뱃지가 붙고 오른쪽 아래 <b>✎ 수정사항</b> 패널에 쌓입니다. 메모는 <b>모든 검토자와 개발사에게 바로 공유</b>됩니다(주황 = 내 메모, 파랑 = 다른 사람 메모).</span><button onclick="this.parentNode.remove()" style="margin-left:auto;background:#fff;color:#00459b;border:0;border-radius:6px;padding:4px 10px;font-weight:600;cursor:pointer">닫기</button></div>
@@ -138,15 +138,15 @@
             <div class="field"><span class="lbl">부동산 종류</span><div class="sel"><select><option value="">종류 선택</option><option>아파트</option><option>단독주택</option><option>오피스텔</option><option>상가</option><option>토지</option><option>기타</option></select></div></div>
             <div class="field full"><span class="lbl">주소 (우편번호 포함 전체주소)</span><input type="text" placeholder="우편번호와 도로명, 건물명, 동/호수까지 입력"></div>
             <div class="field"><span class="lbl">취득년월일</span><div class="date"><input type="text" placeholder="연도. 월. 일"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div></div>
-                  <div class="field"><span class="lbl">취득가격 <small>(매수 시 발생한 부대비용 포함)</small></span><div class="cur-row"><div class="sel"><select data-cur="cost"><option selected>KRW</option><option>USD</option><option>JPY</option><option>CNY</option><option>EUR</option><option>GBP</option><option>HKD</option><option>SGD</option><option>AUD</option><option>CAD</option><option>기타</option></select></div><div class="unit"><input type="text" placeholder="00" data-cost><b data-cur-lbl="cost">원</b></div></div></div>
+                  <div class="field"><span class="lbl">취득가격 <small>(매수 시 발생한 부대비용 포함)</small></span><div class="cur-row"><div class="sel"><select data-cur="cost"><option selected>KRW</option><option>USD</option><option>JPY</option><option>CNY</option><option>EUR</option><option>GBP</option><option>HKD</option><option>SGD</option><option>AUD</option><option>CAD</option><option>기타</option></select></div><div class="unit"><input type="text" placeholder="00" data-cost></div></div></div>
                 </div>
                 <h4 class="md-grp">매도 정보</h4>
                 <div class="form-grid">
             <div class="field"><span class="lbl">매도년월일</span><div class="date"><input type="text" placeholder="연도. 월. 일"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div></div>
-                  <div class="field"><span class="lbl">매도가격</span><div class="cur-row"><div class="sel"><select data-cur="price"><option selected>KRW</option><option>USD</option><option>JPY</option><option>CNY</option><option>EUR</option><option>GBP</option><option>HKD</option><option>SGD</option><option>AUD</option><option>CAD</option><option>기타</option></select></div><div class="unit"><input type="text" placeholder="00" data-price><b data-cur-lbl="price">원</b></div></div></div>
-                  <div class="field"><span class="lbl">매도 시 발생한 부대비용 <small>(중개수수료, 법무비 등 · 매도가격과 같은 통화)</small></span><div class="unit"><input type="text" placeholder="0" data-fee><b data-cur-lbl="price">원</b></div></div>
-                  <div class="field"><span class="lbl">매도일 직전 5년 내 해당 주택 거주일수 <span class="help" data-tip="주거주택(Primary residence)을 매도한 경우, 매도일 직전 5년 중 2년 이상 거주했으면 양도차익 일부(최대 $250,000, 부부 합산 $500,000)를 공제받을 수 있습니다. 거주한 날수를 대략이라도 적어 주세요." title="주거주택(Primary residence)을 매도한 경우, 매도일 직전 5년 중 2년 이상 거주했으면 양도차익 일부(최대 $250,000, 부부 합산 $500,000)를 공제받을 수 있습니다. 거주한 날수를 대략이라도 적어 주세요.">?</span></span><div class="unit"><input type="text" placeholder="0" data-days><b>일</b></div></div>
-                  <div class="field full"><span class="lbl">양도차익 <small>(매도가격 − 매도 부대비용 − 취득가격, 자동 계산)</small></span><div class="unit"><input type="text" readonly class="ro" data-gain placeholder="자동 계산"><b data-cur-lbl="price">원</b></div></div>
+                  <div class="field"><span class="lbl">매도가격</span><div class="cur-row"><div class="sel"><select data-cur="price"><option selected>KRW</option><option>USD</option><option>JPY</option><option>CNY</option><option>EUR</option><option>GBP</option><option>HKD</option><option>SGD</option><option>AUD</option><option>CAD</option><option>기타</option></select></div><div class="unit"><input type="text" placeholder="00" data-price></div></div></div>
+                  <div class="field"><span class="lbl">매도 시 발생한 부대비용 <small>(중개수수료, 법무비 등 · 매도가격과 같은 통화)</small></span><div class="unit"><input type="text" placeholder="0" data-fee></div></div>
+                  <div class="field"><span class="lbl">매도일 직전 5년 내 해당 주택 거주일수 <span class="help" data-tip="주거주택(Primary residence)을 매도한 경우, 매도일 직전 5년 중 2년 이상 거주했으면 양도차익 일부(최대 $250,000, 부부 합산 $500,000)를 공제받을 수 있습니다. 거주한 날수를 대략이라도 적어 주세요." title="주거주택(Primary residence)을 매도한 경우, 매도일 직전 5년 중 2년 이상 거주했으면 양도차익 일부(최대 $250,000, 부부 합산 $500,000)를 공제받을 수 있습니다. 거주한 날수를 대략이라도 적어 주세요.">?</span></span><div class="unit has-b"><input type="text" placeholder="0" data-days><b>일</b></div></div>
+                  <div class="field full"><span class="lbl">양도차익 <small>(매도가격 − 매도 부대비용 − 취득가격, 자동 계산)</small></span><div class="unit"><input type="text" readonly class="ro" data-gain placeholder="자동 계산"></div></div>
                 </div>
               </div>
             </template>
@@ -216,6 +216,6 @@
   </div>
 </div>
 <!-- 수정사항 남기기 도구 (우클릭). 실제 배포 시 아래 한 줄을 지우면 됩니다. -->
-<script src="js/feedback.js?v=20260903134251"></script>
+<script src="js/feedback.js?v=20260903134751"></script>
 </body>
 </html>

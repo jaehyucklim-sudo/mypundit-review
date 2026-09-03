@@ -5,8 +5,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Step 2. 워크시트 작성 - 임대부동산 자산 | PUNDIT Online System</title>
-<link rel="stylesheet" href="css/style.css?v=20260903134251">
-<script src="js/mypundit.js?v=20260903134251"></script>
+<link rel="stylesheet" href="css/style.css?v=20260903134751">
+<script src="js/mypundit.js?v=20260903134751"></script>
 </head>
 <body>
 <div id="rv-banner" style="position:sticky;top:0;z-index:9000;background:#00459b;color:#fff;font:13px/1.5 Pretendard,sans-serif;padding:8px 18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap"><b>검토 방법</b><span>바꾸고 싶은 글자·버튼·입력칸·영역 위에서 <b>마우스 오른쪽 클릭</b> → 메모창이 뜹니다. 요청 내용을 적고 저장하면 그 자리에 번호 뱃지가 붙고 오른쪽 아래 <b>✎ 수정사항</b> 패널에 쌓입니다. 메모는 <b>모든 검토자와 개발사에게 바로 공유</b>됩니다(주황 = 내 메모, 파랑 = 다른 사람 메모).</span><button onclick="this.parentNode.remove()" style="margin-left:auto;background:#fff;color:#00459b;border:0;border-radius:6px;padding:4px 10px;font-weight:600;cursor:pointer">닫기</button></div>
@@ -134,8 +134,8 @@
             <div class="field full"><span class="lbl">주소 (우편번호 포함 전체주소)</span><input type="text" placeholder="우편번호와 도로명, 건물명, 동/호수까지 입력"></div>
             <div class="field"><span class="lbl">취득년월일</span><div class="date"><input type="text" placeholder="연도. 월. 일"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div></div>
             <div class="field"><span class="lbl">임대시작 날짜</span><div class="date"><input type="text" placeholder="연도. 월. 일"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div></div>
-                  <div class="field"><span class="lbl">건물 취득가격 <span class="help" data-tip="토지 가격을 모를 시 건물가격에 모두 기입해 주세요." title="토지 가격을 모를 시 건물가격에 모두 기입해 주세요.">?</span></span><div class="cur-row"><div class="sel"><select data-cur="bld"><option selected>KRW</option><option>USD</option><option>JPY</option><option>CNY</option><option>EUR</option><option>GBP</option><option>HKD</option><option>SGD</option><option>AUD</option><option>CAD</option><option>기타</option></select></div><div class="unit"><input type="text" placeholder="00" data-bld><b data-cur-lbl="bld">원</b></div></div></div>
-                  <div class="field"><div class="lbl-row"><span class="lbl">토지 취득가격</span><label class="chkline small"><input type="checkbox" data-unknown="land"> 모름</label></div><div class="cur-row"><div class="sel"><select data-cur="land"><option selected>KRW</option><option>USD</option><option>JPY</option><option>CNY</option><option>EUR</option><option>GBP</option><option>HKD</option><option>SGD</option><option>AUD</option><option>CAD</option><option>기타</option></select></div><div class="unit"><input type="text" placeholder="00" data-land><b data-cur-lbl="land">원</b></div></div></div>
+                  <div class="field"><span class="lbl">건물 취득가격 <span class="help" data-tip="토지 가격을 모를 시 건물가격에 모두 기입해 주세요." title="토지 가격을 모를 시 건물가격에 모두 기입해 주세요.">?</span></span><div class="cur-row"><div class="sel"><select data-cur="bld"><option selected>KRW</option><option>USD</option><option>JPY</option><option>CNY</option><option>EUR</option><option>GBP</option><option>HKD</option><option>SGD</option><option>AUD</option><option>CAD</option><option>기타</option></select></div><div class="unit"><input type="text" placeholder="00" data-bld></div></div></div>
+                  <div class="field"><div class="lbl-row"><span class="lbl">토지 취득가격</span><label class="chkline small"><input type="checkbox" data-unknown="land"> 모름</label></div><div class="cur-row"><div class="sel"><select data-cur="land"><option selected>KRW</option><option>USD</option><option>JPY</option><option>CNY</option><option>EUR</option><option>GBP</option><option>HKD</option><option>SGD</option><option>AUD</option><option>CAD</option><option>기타</option></select></div><div class="unit"><input type="text" placeholder="00" data-land></div></div></div>
                 </div>
                 <div class="fin-fold open" data-fold2>
                   <div class="nh"><span data-fold-title>신고대상기간 수익·비용 입력</span> <span class="muted">— 재무제표가 있으면 표를 작성하지 말고 재무제표를 보내주세요</span><span class="tgl fold-btn"><span class="tgl-txt">접기</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l5 5 5-5"/></svg></span></div>
@@ -145,7 +145,8 @@
                       <label class="opt"><input type="radio" name="fs__N__" value="no" data-fs><b>재무제표가 없습니다</b><span>아래 표에 임대수익과 비용을 직접 적습니다.</span></label>
                     </div>
                     <div class="simple dim" data-simple>
-                      <div class="simple-head"><span>직접 입력 <span class="muted" data-simple-note>— "재무제표가 없습니다"를 선택하면 열립니다</span></span><span class="cur-pick">입력 통화 <div class="sel"><select data-cur="inc"><option selected>KRW</option><option>USD</option><option>JPY</option><option>CNY</option><option>EUR</option><option>GBP</option><option>HKD</option><option>SGD</option><option>AUD</option><option>CAD</option><option>기타</option></select></div></span></div>
+                      <div class="simple-head"><span>직접 입력 <span class="muted" data-simple-note>— "재무제표가 없습니다"를 선택하면 열립니다</span></span></div>
+                      <div class="ledger-tools"><span class="cur-pick">금액 통화 <div class="sel"><select data-cur="inc"><option selected>KRW</option><option>USD</option><option>JPY</option><option>CNY</option><option>EUR</option><option>GBP</option><option>HKD</option><option>SGD</option><option>AUD</option><option>CAD</option><option>기타</option></select></div></span></div>
                       <div data-ledgers></div>
                     </div>
                   </div>
@@ -154,9 +155,9 @@
             </template>
             <template class="kv-template">
                     <div class="ledger2">
-                      <table class="ledger"><thead><tr><th colspan="2">수익</th></tr></thead><tbody><tr><th>임대수익</th><td><div class="unit"><input type="text" placeholder="0" data-inc><b data-cur-lbl="inc">원</b></div></td></tr><tr><th>기타수익</th><td><div class="unit"><input type="text" placeholder="0" data-inc><b data-cur-lbl="inc">원</b></div></td></tr></tbody><tfoot><tr><th>수익 합계</th><td><div class="unit"><input type="text" readonly class="ro" data-inc-total><b data-cur-lbl="inc">원</b></div></td></tr></tfoot></table>
-                      <table class="ledger"><thead><tr><th colspan="2">비용</th></tr></thead><tbody><tr><th>광고비</th><td><div class="unit"><input type="text" placeholder="0" data-exp><b data-cur-lbl="inc">원</b></div></td></tr><tr><th>청소 및 유지비</th><td><div class="unit"><input type="text" placeholder="0" data-exp><b data-cur-lbl="inc">원</b></div></td></tr><tr><th>각종 수수료</th><td><div class="unit"><input type="text" placeholder="0" data-exp><b data-cur-lbl="inc">원</b></div></td></tr><tr><th>임대 관련 보험료</th><td><div class="unit"><input type="text" placeholder="0" data-exp><b data-cur-lbl="inc">원</b></div></td></tr><tr><th>중개료/세무료/법무료 등</th><td><div class="unit"><input type="text" placeholder="0" data-exp><b data-cur-lbl="inc">원</b></div></td></tr><tr><th>관리비 등</th><td><div class="unit"><input type="text" placeholder="0" data-exp><b data-cur-lbl="inc">원</b></div></td></tr><tr><th>대출 이자(부동산취득목적대출)</th><td><div class="unit"><input type="text" placeholder="0" data-exp><b data-cur-lbl="inc">원</b></div></td></tr><tr><th>기타이자</th><td><div class="unit"><input type="text" placeholder="0" data-exp><b data-cur-lbl="inc">원</b></div></td></tr><tr><th>수리비</th><td><div class="unit"><input type="text" placeholder="0" data-exp><b data-cur-lbl="inc">원</b></div></td></tr><tr><th>비품</th><td><div class="unit"><input type="text" placeholder="0" data-exp><b data-cur-lbl="inc">원</b></div></td></tr><tr><th>재산세</th><td><div class="unit"><input type="text" placeholder="0" data-exp><b data-cur-lbl="inc">원</b></div></td></tr><tr><th>기타잡비</th><td><div class="unit"><input type="text" placeholder="0" data-exp><b data-cur-lbl="inc">원</b></div></td></tr></tbody><tfoot><tr><th>비용 합계</th><td><div class="unit"><input type="text" readonly class="ro" data-exp-total><b data-cur-lbl="inc">원</b></div></td></tr></tfoot></table>
-                      <div class="net">순수익 (수익 − 비용) <b data-net>0</b> <span data-cur-lbl="inc">원</span></div>
+                      <table class="ledger"><thead><tr><th colspan="2">수익</th></tr></thead><tbody><tr><th>임대수익</th><td><div class="unit"><input type="text" placeholder="0" data-inc></div></td></tr><tr><th>기타수익</th><td><div class="unit"><input type="text" placeholder="0" data-inc></div></td></tr></tbody><tfoot><tr><th>수익 합계</th><td><div class="unit"><input type="text" readonly class="ro" data-inc-total></div></td></tr></tfoot></table>
+                      <table class="ledger"><thead><tr><th colspan="2">비용</th></tr></thead><tbody><tr><th>광고비</th><td><div class="unit"><input type="text" placeholder="0" data-exp></div></td></tr><tr><th>청소 및 유지비</th><td><div class="unit"><input type="text" placeholder="0" data-exp></div></td></tr><tr><th>각종 수수료</th><td><div class="unit"><input type="text" placeholder="0" data-exp></div></td></tr><tr><th>임대 관련 보험료</th><td><div class="unit"><input type="text" placeholder="0" data-exp></div></td></tr><tr><th>중개료/세무료/법무료 등</th><td><div class="unit"><input type="text" placeholder="0" data-exp></div></td></tr><tr><th>관리비 등</th><td><div class="unit"><input type="text" placeholder="0" data-exp></div></td></tr><tr><th>대출 이자(부동산취득목적대출)</th><td><div class="unit"><input type="text" placeholder="0" data-exp></div></td></tr><tr><th>기타이자</th><td><div class="unit"><input type="text" placeholder="0" data-exp></div></td></tr><tr><th>수리비</th><td><div class="unit"><input type="text" placeholder="0" data-exp></div></td></tr><tr><th>비품</th><td><div class="unit"><input type="text" placeholder="0" data-exp></div></td></tr><tr><th>재산세</th><td><div class="unit"><input type="text" placeholder="0" data-exp></div></td></tr><tr><th>기타잡비</th><td><div class="unit"><input type="text" placeholder="0" data-exp></div></td></tr></tbody><tfoot><tr><th>비용 합계</th><td><div class="unit"><input type="text" readonly class="ro" data-exp-total></div></td></tr></tfoot></table>
+                      <div class="net">순수익 (수익 − 비용) <b data-net>0</b></div>
                     </div>
             </template>
           </section>
@@ -172,6 +173,9 @@
               nb.innerHTML = '';
               function fill(blk, y) { blk.innerHTML = kv.innerHTML; var g = blk.querySelector('.ledger2'); g.dataset.year = y; if (saved[y]) g.querySelectorAll('input:not([readonly])').forEach(function (i, k) { i.value = saved[y][k] || ''; }); }
               if (mode === 'sdop') MP.yearTabs(nb, YEARS, CUR_YEAR, fill); else fill(nb, CUR_YEAR);
+              /* 통화 선택 위치: SDOP는 연도 탭 줄 오른쪽, 정기신고는 표 바로 위 */
+              var pick = p.querySelector('.cur-pick'), tools = p.querySelector('.ledger-tools'), ybar = nb.querySelector('.ytabs');
+              if (pick) { if (ybar) { ybar.appendChild(pick); tools.hidden = true; } else { tools.appendChild(pick); tools.hidden = false; } }
               p.querySelector('[data-fold-title]').textContent = mode === 'sdop' ? '연도별 수익·비용 입력 (2019~2025)' : '2025년 수익·비용 입력';
               calc(p); applyFs(p);
             }
@@ -252,6 +256,6 @@
   </div>
 </div>
 <!-- 수정사항 남기기 도구 (우클릭). 실제 배포 시 아래 한 줄을 지우면 됩니다. -->
-<script src="js/feedback.js?v=20260903134251"></script>
+<script src="js/feedback.js?v=20260903134751"></script>
 </body>
 </html>

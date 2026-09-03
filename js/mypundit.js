@@ -190,7 +190,39 @@ window.MP = (function () {
     } else markTabs();
     window.addEventListener('storage', markTabs);
   }
-  function onReady() { bindFolds(); bindSide(); bindNA(); }
+  /* 금액 칸 자동 쉼표: 금액 입력(.unit, 표의 숫자 칸, 금융계좌 잔액·소득, 증여 가액)에 천 단위 구분 */
+  var MONEY_SEL = '.unit input:not([readonly]), td.num input:not([readonly]), input[data-g="amount"], input[data-f="max"], input[data-f="dec"], input[data-f="int"], input[data-f="div"], input[data-f="intw"], input[data-f="divw"]';
+  function fmtMoney(el) {
+    var v = el.value; if (!v) return;
+    var neg = /^\s*-/.test(v), parts = v.replace(/[^0-9.]/g, '').split('.');
+    var whole = parts[0].replace(/^0+(?=\d)/, ''), dec = parts.length > 1 ? '.' + parts.slice(1).join('').slice(0, 4) : '';
+    if (!whole && !dec) { el.value = neg ? '-' : ''; return; }
+    var out = (neg ? '-' : '') + (whole ? whole.replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0') + dec;
+    if (out !== v) { el.value = out; try { el.setSelectionRange(out.length, out.length); } catch (e) {} }
+  }
+  function bindMoney() {
+    document.addEventListener('input', function (e) { var el = e.target; if (el && el.matches && el.matches(MONEY_SEL)) fmtMoney(el); });
+    document.addEventListener('blur', function (e) { var el = e.target; if (el && el.matches && el.matches(MONEY_SEL)) fmtMoney(el); }, true);
+  }
+  /* 통화 선택에서 '기타'를 고르면 같은 자리에 직접 입력 칸을 연다 (금융계좌는 화면이 직접 처리) */
+  function bindCurOther() {
+    document.addEventListener('change', function (e) {
+      var s = e.target; if (!s || !s.matches || !s.matches('select[data-cur], select[data-g="cur"], select[data-k="cur"]')) return;
+      var wrap = s.closest('.sel'); if (!wrap) return;
+      var inp = wrap.querySelector('.cur-other');
+      if (s.value === '기타') {
+        if (!inp) {
+          inp = document.createElement('input'); inp.type = 'text'; inp.className = 'cur-other'; inp.placeholder = '통화 코드 직접 입력 (예: TWD)'; inp.maxLength = 12;
+          var key = s.hasAttribute('data-g') ? 'data-g' : (s.hasAttribute('data-k') ? 'data-k' : 'data-cur');
+          inp.setAttribute(key, s.getAttribute(key) + 'Other');
+          inp.addEventListener('blur', function () { if (!inp.value.trim()) { wrap.classList.remove('other'); inp.remove(); s.value = ''; s.dispatchEvent(new Event('change', { bubbles: true })); } });
+          wrap.appendChild(inp);
+        }
+        wrap.classList.add('other'); inp.focus();
+      } else if (inp) { wrap.classList.remove('other'); inp.remove(); }
+    });
+  }
+  function onReady() { bindFolds(); bindSide(); bindNA(); bindMoney(); bindCurOther(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', onReady); else onReady();
 
   return { KEY: KEY, esc: esc, people: people, label: label, personTabs: personTabs, grid: grid, addRow: addRow, rowData: rowData, num: num, fmt: fmt, yearTabs: yearTabs, seg: seg, notes: notes };

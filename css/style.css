@@ -739,3 +739,15 @@ input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--blue); m
 .fbar-row:has(input:checked) { border-color: var(--blue); background: var(--blue-pale); }
 .fbar-row:has(input:checked) b { color: var(--blue); }
 .empty-box p.muted { margin-top: 12px; font-size: 14px; }
+
+/* 금액 칸: 통화 단위 표시 제거 (단, '일' 같은 비통화 단위는 유지) */
+.unit input, .field .unit input, .grid-rows .rw .unit input { padding-right: 16px; }
+.unit.has-b input { padding-right: 48px; }
+/* 통화 '기타' 직접 입력: 드롭다운 자리에 입력칸 */
+.sel .cur-other { display: none; }
+.sel.other select, .sel.other::after { display: none; }
+.sel.other .cur-other { display: block; width: 100%; }
+.acct .sel.other .cur-other { height: 42px; border: 1px solid var(--line); border-radius: 6px; padding: 0 10px; font-size: 14px; }
+/* 임대부동산 수익·비용: 통화 선택 위치 */
+.ledger-tools { display: flex; justify-content: flex-end; margin: 0 0 10px; }
+.ytabs .cur-pick { margin-left: auto; }
