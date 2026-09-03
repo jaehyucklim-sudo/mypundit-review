@@ -34,7 +34,13 @@
   /* ---------- 저장소 ---------- */
   function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
   function save() { if (SYNC) return; try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (e) { alert('저장에 실패했습니다: ' + e.message); } }
-  var db = SYNC ? {} : load();
+  var CKEY = KEY + ':cache';
+  function loadCache() { try { return JSON.parse(localStorage.getItem(CKEY)) || {}; } catch (e) { return {}; } }
+  function saveCache(o) { try { localStorage.setItem(CKEY, JSON.stringify(o)); } catch (e) {} }
+  var db = SYNC ? loadCache() : load();
+  /* #fb=<id> 로 들어오면 그 메모 위치로 이동해 연다 (전체 보기에서 클릭한 경우) */
+  var pendingFocus = (location.hash.match(/^#fb=(.+)$/) || [])[1] || '';
+  if (pendingFocus) { pendingFocus = decodeURIComponent(pendingFocus); try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
   var settings = { mode: localStorage.getItem(KEY + ':mode') !== 'off', open: localStorage.getItem(KEY + ':open') !== 'closed' };
   function notes() { return db[PAGE] || (db[PAGE] = []); }
   function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
@@ -55,10 +61,10 @@
   function me() { try { return localStorage.getItem(AKEY) || ''; } catch (e) { return ''; } }
 
   /* ---------- 서버 동기화 (공유 모드) ---------- */
-  var syncState = { ok: false, loading: false, err: '' };
+  var syncState = { ok: false, loading: false, err: '', at: '' };
   function syncLoad(silent) {
     if (!SYNC) return Promise.resolve();
-    syncState.loading = true;
+    syncState.loading = true; var dot = panel && panel.querySelector('.sync .dot'); if (dot) dot.className = 'dot busy';
     return fetch(SYNC + (SYNC.indexOf('?') < 0 ? '?' : '&') + 'action=list&_=' + Date.now(), { method: 'GET', redirect: 'follow' })
       .then(function (r) { return r.json(); })
       .then(function (j) {
@@ -66,8 +72,8 @@
         var next = {};
         (j.memos || []).forEach(function (m) { if (m.deleted) return; (next[m.page] = next[m.page] || []).push(m); });
         Object.keys(next).forEach(function (p) { next[p].sort(function (a, b) { return String(a.created).localeCompare(String(b.created)); }); });
-        db = next; syncState.ok = true; syncState.err = ''; syncState.loading = false;
-        refresh();
+        db = next; saveCache(next); syncState.ok = true; syncState.err = ''; syncState.loading = false; syncState.at = now().slice(11);
+        refresh(); if (modal) renderModal();
       })
       .catch(function (e) {
         syncState.ok = false; syncState.err = e.message || String(e); syncState.loading = false;
@@ -172,6 +178,37 @@
   .fb-panel .sync{display:flex;align-items:center;gap:8px;padding:8px 16px;font-size:12px;color:#555;border-bottom:1px solid #eee}\
   .fb-panel .sync .dot{width:8px;height:8px;border-radius:50%;background:#2e7d32;flex:none}\
   .fb-panel .sync .dot.off{background:#c8401a}\
+  .fb-panel .sync .dot.busy{background:none;border:2px solid #ccc;border-top-color:#00459b;animation:fbspin .8s linear infinite}\
+  @keyframes fbspin{to{transform:rotate(360deg)}}\
+  .fb-panel .other{cursor:pointer;color:#00459b}\
+  .fb-panel .other:hover{text-decoration:underline}\
+  .fb-modal{position:fixed;inset:0;z-index:100001;background:rgba(10,22,45,.5);display:flex;align-items:center;justify-content:center;font-family:Pretendard,sans-serif;color:#222}\
+  .fb-mbox{width:min(980px,94vw);height:min(88vh,920px);background:#fff;border-radius:16px;box-shadow:0 24px 70px rgba(0,0,0,.35);display:flex;flex-direction:column;overflow:hidden}\
+  .fb-mh{display:flex;align-items:center;gap:12px;padding:16px 22px;border-bottom:1px solid #eee;flex:none}\
+  .fb-mh b{font-size:18px}\
+  .fb-mh .cnt{background:#e8562a;color:#fff;border-radius:10px;padding:2px 10px;font-size:13px;font-weight:700}\
+  .fb-mf{display:flex;align-items:center;gap:12px;margin-left:auto}\
+  .fb-mf input[type=search]{height:36px;border:1px solid #ddd;border-radius:8px;padding:0 12px;font:14px Pretendard,sans-serif;width:240px}\
+  .fb-mf label{display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;white-space:nowrap}\
+  .fb-mf label input{width:15px;height:15px;accent-color:#00459b;margin:0}\
+  .fb-mh .x{border:0;background:none;font-size:26px;line-height:1;cursor:pointer;color:#666;margin-left:6px}\
+  .fb-mb{flex:1;overflow:auto;padding:4px 22px 16px}\
+  .fb-mb .empty{padding:60px 0;text-align:center;color:#999}\
+  .fb-mp{margin-top:16px}\
+  .fb-mph{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;padding:10px 0;border-bottom:2px solid #1a1a1a;position:sticky;top:0;background:#fff;z-index:1}\
+  .fb-mph span{font-size:12px;color:#777;font-weight:500}\
+  .fb-mph em{font-style:normal;font-size:11px;color:#00459b;background:#eff4fa;border-radius:4px;padding:2px 6px}\
+  .fb-mi{display:flex;gap:14px;padding:12px 6px;border-bottom:1px solid #f0f0f0;cursor:pointer;align-items:flex-start}\
+  .fb-mi:hover{background:#fafbfd}\
+  .fb-mi .n{flex:none;width:24px;height:24px;border-radius:12px;background:#e8562a;color:#fff;font:700 12px/24px Pretendard,sans-serif;text-align:center;margin-top:2px}\
+  .fb-mi.theirs .n{background:#00459b}\
+  .fb-mi .t{flex:1;min-width:0}\
+  .fb-mi .w{font-size:13px;color:#777}\
+  .fb-mi .a{font-size:12px;color:#00459b;font-weight:600;margin-top:2px}\
+  .fb-mi .m{font-size:15px;line-height:1.55;white-space:pre-wrap;word-break:break-word;margin-top:4px}\
+  .fb-mi .go{flex:none;font-size:13px;color:#00459b;align-self:center;white-space:nowrap}\
+  .fb-mt{display:flex;align-items:center;gap:8px;padding:12px 22px;border-top:1px solid #eee;background:#fafafa;flex:none}\
+  .fb-mt .hint{margin-left:auto;font-size:12px;color:#777}\
   .fb-panel .sync .me{margin-left:auto;color:#00459b;cursor:pointer;text-decoration:underline}\
   .fb-panel .list{max-height:300px;overflow:auto}\
   .fb-panel .empty{padding:24px 16px;color:#999;text-align:center;font-size:13px;line-height:1.7}\
@@ -307,14 +344,15 @@
       '<div class="ph"><b>✎ 수정사항</b><span class="cnt">' + list.length + '</span><span class="tg">' + (panel.classList.contains('open') ? '접기 ▾' : '펼치기 ▴') + '</span></div>' +
       '<div class="pb">' +
       '<div class="mode"><label><input type="checkbox" ' + (settings.mode ? 'checked' : '') + '> 우클릭으로 메모 남기기</label><span class="hint">Shift+우클릭 = 기본 메뉴</span></div>' +
-      (SYNC ? '<div class="sync"><span class="dot' + (syncState.ok ? '' : ' off') + '"></span>' + (syncState.ok ? '공유 모드 · 모든 검토자에게 보입니다' : (syncState.loading ? '공유 서버 연결 중…' : '공유 서버 연결 안 됨')) + '<span class="me" data-t="who">' + esc(me() || '이름 설정') + '</span></div>' : '') +
+      (SYNC ? '<div class="sync"><span class="dot' + (syncState.loading ? ' busy' : (syncState.ok ? '' : ' off')) + '"></span>' + (syncState.loading ? '공유 서버와 동기화 중… (저장된 목록을 먼저 보여줍니다)' : (syncState.ok ? '공유 모드 · 마지막 동기화 ' + syncState.at : '공유 서버 연결 안 됨 · 저장된 목록 표시')) + '<span class="me" data-t="who">' + esc(me() || '이름 설정') + '</span></div>' : '') +
       '<div class="list">' + (list.length ? list.map(function (n, i) {
         var mine = isMine(n);
         return '<div class="it' + (mine ? '' : ' theirs') + '" data-id="' + n.id + '"><span class="n">' + (i + 1) + '</span><div class="t"><div class="w">' + esc(n.label) + '</div>' + (n.author ? '<div class="a">' + esc(n.author) + ' · ' + esc(fdate(n.updated || n.created)) + '</div>' : '') + '<div class="m">' + esc(n.note) + '</div></div><button class="x" data-del="' + n.id + '" title="삭제">×</button></div>';
       }).join('') : '<div class="empty">아직 남긴 수정사항이 없습니다.<br>바꾸고 싶은 글자·버튼·영역을 <b>우클릭</b>해 보세요.</div>') + '</div>' +
-      (others ? '<div class="other">다른 페이지의 수정사항 ' + others + '건은 복사/저장 시 함께 포함됩니다.</div>' : '') +
+      (others ? '<div class="other" data-t="all">다른 페이지의 수정사항 ' + others + '건 — 전체 보기 ›</div>' : '') +
       '<div class="tools">' +
-      '<button class="fb-btn p" data-t="copy">📋 전체 복사</button>' +
+      '<button class="fb-btn p" data-t="all">🗂 전체 보기 (' + total() + ')</button>' +
+      '<button class="fb-btn" data-t="copy">📋 전체 복사</button>' +
       '<button class="fb-btn" data-t="txt">⬇ 텍스트 저장</button>' +
       (SYNC ? '<button class="fb-btn" data-t="reload">↻ 새로고침</button>' :
         '<button class="fb-btn" data-t="json">⬇ 백업(JSON)</button><button class="fb-btn" data-t="import">⬆ 불러오기</button><button class="fb-btn d" data-t="clear">이 페이지 비우기</button>') +
@@ -335,7 +373,8 @@
       return;
     }
     var tool = t.getAttribute('data-t');
-    if (tool === 'copy') copyText(exportText());
+    if (tool === 'all') openModal();
+    else if (tool === 'copy') copyText(exportText());
     else if (tool === 'txt') download('수정사항_' + now().replace(/[: ]/g, '-') + '.txt', exportText(), 'text/plain');
     else if (tool === 'json') download('수정사항_백업_' + now().replace(/[: ]/g, '-') + '.json', JSON.stringify(db, null, 2), 'application/json');
     else if (tool === 'import') importJson();
@@ -343,6 +382,55 @@
     else if (tool === 'who') { author(true); refresh(); }
     else if (tool === 'clear') { if (notes().length && confirm('이 페이지의 수정사항 ' + notes().length + '건을 모두 삭제할까요?')) { db[PAGE] = []; save(); refresh(); } }
   });
+
+  /* ---------- 전체 보기 팝업 ---------- */
+  var modal = null, mq = '', mMine = false;
+  function focusNote(n) {
+    var el = findByPath(n.path); if (!el) { toast('이 화면에서 해당 위치를 찾지 못했습니다'); return; }
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(function () { var r = el.getBoundingClientRect(); openPopup(el, { x: r.left, y: r.bottom }, n); }, 450);
+  }
+  function closeModal() { if (modal) { modal.remove(); modal = null; } }
+  function renderModal() {
+    if (!modal) return;
+    var q = mq.toLowerCase(), pages = PAGE_ORDER.concat(Object.keys(db).filter(function (k) { return PAGE_ORDER.indexOf(k) < 0; })), html = '', shown = 0;
+    pages.forEach(function (p) {
+      var all = db[p] || [];
+      var list = all.filter(function (n) { return (!mMine || isMine(n)) && (!q || ((n.note || '') + ' ' + (n.label || '') + ' ' + (n.author || '')).toLowerCase().indexOf(q) >= 0); });
+      if (!list.length) return;
+      html += '<div class="fb-mp"><div class="fb-mph">' + esc(TITLES[p] || p) + '<span>' + list.length + '건</span>' + (p === PAGE ? '<em>현재 화면</em>' : '') + '</div>';
+      list.forEach(function (n) {
+        shown++;
+        html += '<div class="fb-mi' + (isMine(n) ? '' : ' theirs') + '" data-page="' + esc(p) + '" data-id="' + esc(n.id) + '"><span class="n">' + (all.indexOf(n) + 1) + '</span><div class="t"><div class="w">' + esc(n.label) + '</div>' + (n.author ? '<div class="a">' + esc(n.author) + ' · ' + esc(fdate(n.updated || n.created)) + '</div>' : '') + '<div class="m">' + esc(n.note) + '</div></div><span class="go">' + (p === PAGE ? '위치 보기 ›' : '화면으로 이동 ›') + '</span></div>';
+      });
+      html += '</div>';
+    });
+    modal.querySelector('.fb-mb').innerHTML = html || '<div class="empty">표시할 수정사항이 없습니다.</div>';
+    modal.querySelector('.cnt').textContent = total() + '건';
+  }
+  function openModal() {
+    closeModal(); closePopup();
+    modal = document.createElement('div'); modal.className = 'fb-modal';
+    modal.innerHTML = '<div class="fb-mbox"><div class="fb-mh"><b>✎ 수정사항 전체</b><span class="cnt"></span><div class="fb-mf"><input type="search" placeholder="검색 (내용 · 위치 · 작성자)" value="' + esc(mq) + '"><label><input type="checkbox" data-mine' + (mMine ? ' checked' : '') + '> 내 메모만</label></div><button class="x" data-a="close" title="닫기 (ESC)">×</button></div><div class="fb-mb"></div><div class="fb-mt"><button class="fb-btn p" data-t="copy">📋 전체 복사</button><button class="fb-btn" data-t="txt">⬇ 텍스트 저장</button>' + (SYNC ? '<button class="fb-btn" data-t="reload">↻ 새로고침</button>' : '') + '<span class="hint">항목을 누르면 해당 화면의 그 자리로 이동합니다.</span></div></div>';
+    document.body.appendChild(modal); renderModal();
+    modal.querySelector('input[type=search]').addEventListener('input', function (e) { mq = e.target.value; renderModal(); });
+    modal.querySelector('[data-mine]').addEventListener('change', function (e) { mMine = e.target.checked; renderModal(); });
+    modal.addEventListener('mousedown', function (e) { if (e.target === modal) closeModal(); });
+    modal.addEventListener('click', function (e) {
+      var t = e.target;
+      if (t.getAttribute('data-a') === 'close') { closeModal(); return; }
+      var tool = t.getAttribute('data-t');
+      if (tool === 'copy') { copyText(exportText()); return; }
+      if (tool === 'txt') { download('수정사항_' + now().replace(/[: ]/g, '-') + '.txt', exportText(), 'text/plain'); return; }
+      if (tool === 'reload') { syncLoad(false).then(function () { toast('최신 메모를 불러왔습니다'); }); return; }
+      var it = t.closest('.fb-mi'); if (!it) return;
+      var p = it.getAttribute('data-page'), id = it.getAttribute('data-id');
+      if (p === PAGE) { closeModal(); var n = notes().filter(function (x) { return x.id === id; })[0]; if (n) focusNote(n); }
+      else location.href = p + '#fb=' + encodeURIComponent(id);
+    });
+    if (SYNC) syncLoad(true);
+  }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal) closeModal(); });
 
   /* ---------- 내보내기 ---------- */
   function exportText() {
@@ -403,4 +491,11 @@
 
   document.body.classList.toggle('fb-off', !settings.mode);
   refresh();
+  function tryFocus() {
+    if (!pendingFocus) return;
+    var n = notes().filter(function (x) { return x.id === pendingFocus; })[0];
+    if (n) { pendingFocus = ''; setTimeout(function () { focusNote(n); }, 400); }
+  }
+  window.addEventListener('load', function () { setTimeout(tryFocus, 350); });
+  if (SYNC) { var _refresh = refresh; refresh = function () { _refresh(); tryFocus(); }; }
 })();
