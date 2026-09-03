@@ -112,7 +112,6 @@
           <section class="panel" data-sale>
             <div class="card-head">
               <h2 class="panel-title">부동산 매매</h2>
-              <button type="button" class="btn-sm" data-prop-add><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg> 부동산 추가</button>
             </div>
             <div class="notes open" data-notes>
               <div class="nh">입력 시 유의사항 <svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l5 5 5-5"/></svg></div>
@@ -123,7 +122,10 @@
                 <li>매매계약서, 등기부등본, 양도소득세 신고서가 있으면 Step 3 자료 업로드에서 함께 보내주세요.</li>
               </ul>
             </div>
-            <div class="ptabs prop-tabs" data-prop-tabs></div>
+            <div class="ptabs-row">
+              <div class="ptabs prop-tabs" data-prop-tabs></div>
+              <button type="button" class="btn-sm dl" data-prop-add><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg> 부동산 추가</button>
+            </div>
             <div class="props"></div>
             <template class="prop-template">
               <div class="prop" data-prop>

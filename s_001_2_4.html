@@ -115,11 +115,13 @@
               <div class="panel-tools">
                 <span class="seg-lbl">신고 유형 미리보기</span>
                 <div class="seg"><button type="button" data-mode="regular">정기신고</button><button type="button" class="on" data-mode="sdop">SDOP / SFOP</button></div>
-                <button type="button" class="btn-sm" data-prop-add><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg> 부동산 추가</button>
               </div>
             </div>
             <p class="panel-desc">워크북 "임대부동산 자산정보"와 같은 항목입니다. 부동산마다 소유인, 지분율, 종류, 주소, 취득일, 건물·토지 취득가격, 임대시작 날짜를 입력합니다. 수익·비용은 정기신고면 2025년 한 해, SDOP/SFOP면 2019~2025년 연도 탭으로 입력합니다. 소유인 목록은 <a href="s_001_2_1.html" class="blue">개인정보</a>의 구성원을 따릅니다.</p>
-            <div class="ptabs prop-tabs" data-prop-tabs></div>
+            <div class="ptabs-row">
+              <div class="ptabs prop-tabs" data-prop-tabs></div>
+              <button type="button" class="btn-sm dl" data-prop-add><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg> 부동산 추가</button>
+            </div>
             <div class="props"></div>
             <template class="prop-template">
               <div class="prop" data-prop>
