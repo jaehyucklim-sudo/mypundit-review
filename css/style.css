@@ -642,7 +642,10 @@ input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--blue); m
 .prop .opt span { font-size: 13px; color: #555; line-height: 1.5; }
 .prop .simple { margin-top: 18px; }
 .prop .simple.dim [data-ledgers] { opacity: .45; pointer-events: none; }
-.prop .simple-head { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+.prop .simple-head { display: flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+.prop .cur-pick { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: var(--text-2); white-space: nowrap; }
+.prop .cur-pick .sel { width: 110px; }
+.prop .cur-pick select { height: 36px; font-size: 14px; }
 .prop .simple-head .muted { font-size: 13px; font-weight: 500; color: #555; }
 .prop .ledger2 { display: grid; grid-template-columns: 1fr 1.4fr; gap: 20px; align-items: start; }
 .prop .ledger { width: 100%; border-collapse: collapse; }
