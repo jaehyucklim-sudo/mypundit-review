@@ -100,10 +100,40 @@
             </div>
           </section>
         </div>
-        <section class="card">
-          <!-- 이 섹션의 내용(제목 포함)은 추후 결정 예정 (2026-09-02 댓글 요청으로 비움) -->
+        <section class="card kb" data-kb>
+          <div class="card-head">
+            <div><h2 class="card-title">펀딧 지식창고</h2><p class="card-desc">미국 세금, 펀딧이 쉽게 풀어드립니다. 최신 글을 바로 읽어 보세요.</p></div>
+            <a class="panel-link" href="https://pundit.co.kr/knowledge/" target="_blank" rel="noopener">전체 보기 →</a>
+          </div>
+          <div class="kb-list" data-kb-list>
+              <a class="kb-item" href="https://pundit.co.kr/%ec%a0%9c%ea%b0%80-%ea%b0%80%ec%9e%85%ed%95%9c-%ec%83%81%ed%92%88%ec%9d%b4-pfic-%ec%9d%b8%ea%b0%80%ec%9a%94/" target="_blank" rel="noopener"><span class="kb-date">2026. 02. 13</span><b class="kb-title">제가 가입한 상품이 PFIC 인가요?</b><span class="kb-ex">안녕하세요! 여러분의 미국 세무전문가 PUNDIT입니다. 많은 분들이 PFIC를 처음 접할 때 가장 먼저 떠올리는 공식이 있습니다…</span></a>
+              <a class="kb-item" href="https://pundit.co.kr/trumpaccounts/" target="_blank" rel="noopener"><span class="kb-date">2026. 02. 09</span><b class="kb-title">자녀를 위한 트럼프 계좌 (Trump Accounts) 신청 자격 및 방법 총정리</b><span class="kb-ex">트럼프 행정부 2기가 출범하면서 세무 환경에도 많은 변화가 예고되고 있습니다. 그중에서도 자녀를 둔 납세자분들의 관심이 가장 뜨거…</span></a>
+              <a class="kb-item" href="https://pundit.co.kr/%eb%b6%80%ec%96%91%ec%9e%90%eb%85%80%ec%9d%98-%ec%86%8c%eb%93%9d-%eb%b3%b4%ea%b3%a0-%ec%9d%98%eb%ac%b4-2025-tax-year-edition/" target="_blank" rel="noopener"><span class="kb-date">2025. 12. 23</span><b class="kb-title">부양자녀의 소득 보고 의무 – 2025 Tax Year Edition</b><span class="kb-ex">부양 자녀들에게 소득이 있을 때, 해당 소득을 본인과 같이 보고해야 할지, 아니면 부양자와 별도로 보고해야 할지, 또한 보고기준 …</span></a>
+              <a class="kb-item" href="https://pundit.co.kr/%ec%9d%bc%eb%b0%98-%ed%88%ac%ec%9e%90%ec%9e%90%ec%9d%98-%ec%a0%84%eb%ac%b8-%ed%8a%b8%eb%a0%88%ec%9d%b4%eb%8d%94-%ec%a0%84%ed%99%98-trader-tax-status-tts-section-475f/" target="_blank" rel="noopener"><span class="kb-date">2025. 11. 28</span><b class="kb-title">일반 투자자의 전문 트레이더 전환 (Trader Tax Status, TTS, Section 475(f))</b><span class="kb-ex">단기 매매를 자주 하는 투자자라면 한 번쯤 실제로는 손해를 봤는데도 세금을 내야 하는 상황을 겪어보셨을 겁니다. 이런 일이 발생하…</span></a>
+              <a class="kb-item" href="https://pundit.co.kr/%ec%99%b8%ea%b5%ad-%ec%86%8c%ec%9c%a0-%eb%af%b8%ea%b5%ad%eb%b2%95%ec%9d%b8%ec%9d%98-%ec%a0%95%eb%b3%b4%eb%b3%b4%ea%b3%a0-%ec%9d%98%eb%ac%b4-form-5472/" target="_blank" rel="noopener"><span class="kb-date">2025. 11. 28</span><b class="kb-title">외국 소유 미국법인의 정보보고 의무 (Form 5472)</b><span class="kb-ex">미국 세법상 비거주자인 개인 또는 한국 법인이 미국에 Single-Member LLC 또는 C-Corporation 등의 법인을 …</span></a>
+              <a class="kb-item" href="https://pundit.co.kr/%ec%b5%9c%ec%a0%80%ed%95%9c%ec%84%b8alternative-minimum-tax-amt/" target="_blank" rel="noopener"><span class="kb-date">2025. 11. 28</span><b class="kb-title">최저한세(Alternative Minimum Tax, AMT)</b><span class="kb-ex">고소득자라면 한 번쯤 최저한세(Alternative Minimum Tax, AMT) 제도에 대해 들어보신 적이 있으실 것입니다. …</span></a>
+          </div>
+          <div class="kb-foot"><a href="https://pundit.co.kr/pundits-book/" target="_blank" rel="noopener">펀딧 북 · 미국 세금 안내서 보기</a><span class="muted" data-kb-src>pundit.co.kr 지식창고</span></div>
         </section>
       </div>
+      <script>
+      (function () {
+        /* 실제 서비스에서는 홈페이지(WordPress) 글을 실시간으로 불러온다. 불러오지 못하면 위의 저장된 목록을 그대로 보여준다. */
+        var box = document.querySelector('[data-kb-list]'); if (!box || !window.fetch) return;
+        function esc(x) { return String(x == null ? '' : x).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+        function text(h) { var d = document.createElement('div'); d.innerHTML = h || ''; var t = (d.textContent || '').replace(/\s+/g, ' ').trim(); t = t.replace(/^안녕하세요!?\s*여러분의 미국 세무전문가 PUNDIT입니다\.?\s*/, ''); return t.length > 72 ? t.slice(0, 72) + '…' : t; }
+        fetch('https://pundit.co.kr/wp-json/wp/v2/posts?per_page=6&_fields=title,link,date,excerpt', { mode: 'cors' })
+          .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+          .then(function (posts) {
+            if (!posts || !posts.length) return;
+            box.innerHTML = posts.map(function (p) {
+              var d = document.createElement('div'); d.innerHTML = p.title.rendered;
+              return '<a class="kb-item" href="' + esc(p.link) + '" target="_blank" rel="noopener"><span class="kb-date">' + esc(p.date.slice(0, 10).replace(/-/g, '. ')) + '</span><b class="kb-title">' + esc(d.textContent) + '</b><span class="kb-ex">' + esc(text(p.excerpt.rendered)) + '</span></a>';
+            }).join('');
+            var src = document.querySelector('[data-kb-src]'); if (src) src.textContent = 'pundit.co.kr 지식창고 · 실시간';
+          }).catch(function () {});
+      })();
+      </script>
     </main>
     <footer class="footer">
       <div class="l">
