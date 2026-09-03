@@ -210,7 +210,7 @@
   .fb-mt{display:flex;align-items:center;gap:8px;padding:12px 22px;border-top:1px solid #eee;background:#fafafa;flex:none}\
   .fb-mt .hint{margin-left:auto;font-size:12px;color:#777}\
   .fb-panel .sync .me{margin-left:auto;color:#00459b;cursor:pointer;text-decoration:underline}\
-  .fb-panel .list{max-height:300px;overflow:auto}\
+  .fb-panel .list{max-height:360px;overflow:auto}  .fb-panel .grp{display:flex;align-items:center;gap:8px;padding:8px 16px;font-size:12px;font-weight:700;color:#333;background:#f4f6fa;border-top:1px solid #e9ecf1;position:sticky;top:0}  .fb-panel .grp span{color:#888;font-weight:500}  .fb-panel .grp em{font-style:normal;font-size:11px;color:#00459b;background:#e7f0f9;border-radius:4px;padding:1px 6px;margin-left:auto}  .fb-panel .grp em.go{background:none;color:#999}  .fb-panel .it.away{opacity:.85}\
   .fb-panel .empty{padding:24px 16px;color:#999;text-align:center;font-size:13px;line-height:1.7}\
   .fb-panel .it{display:flex;gap:10px;padding:10px 16px;border-top:1px solid #f0f0f0;cursor:pointer}\
   .fb-panel .it:hover{background:#fafafa}\
@@ -318,8 +318,8 @@
       } else { save(); toast('저장했습니다'); }
     }
   }
-  function removeNote(id) {
-    db[PAGE] = notes().filter(function (n) { return n.id !== id; }); refresh();
+  function removeNote(id, page) {
+    var pg = page || PAGE; db[pg] = (db[pg] || []).filter(function (n) { return n.id !== id; }); refresh(); if (modal) renderModal();
     if (SYNC) syncPost({ action: 'delete', id: id }).then(function () { syncLoad(true); }).catch(function (e) { alert('삭제하지 못했습니다: ' + e.message); syncLoad(true); });
     else save();
   }
@@ -337,19 +337,25 @@
   document.body.appendChild(panel);
 
   function total() { var c = 0; for (var k in db) c += (db[k] || []).length; return c; }
+  function panelList() {
+    var pages = [PAGE].concat(PAGE_ORDER.filter(function (p) { return p !== PAGE; })).concat(Object.keys(db).filter(function (k) { return PAGE_ORDER.indexOf(k) < 0 && k !== PAGE; }));
+    return pages.map(function (p) {
+      var list = db[p] || []; if (!list.length) return '';
+      var here = p === PAGE;
+      return '<div class="grp' + (here ? ' here' : '') + '">' + esc(TITLES[p] || p) + '<span>' + list.length + '건</span>' + (here ? '<em>현재 화면</em>' : '<em class="go">이동 ›</em>') + '</div>' + list.map(function (n, i) {
+        return '<div class="it' + (isMine(n) ? '' : ' theirs') + (here ? '' : ' away') + '" data-id="' + n.id + '" data-page="' + esc(p) + '"><span class="n">' + (i + 1) + '</span><div class="t"><div class="w">' + esc(n.label) + '</div>' + (n.author ? '<div class="a">' + esc(n.author) + ' · ' + esc(fdate(n.updated || n.created)) + '</div>' : '') + '<div class="m">' + esc(n.note) + '</div></div><button class="x" data-del="' + n.id + '" data-page="' + esc(p) + '" title="삭제">×</button></div>';
+      }).join('');
+    }).join('');
+  }
   function refresh() {
     var list = notes();
     var others = total() - list.length;
     panel.innerHTML =
-      '<div class="ph"><b>✎ 수정사항</b><span class="cnt">' + list.length + '</span><span class="tg">' + (panel.classList.contains('open') ? '접기 ▾' : '펼치기 ▴') + '</span></div>' +
+      '<div class="ph"><b>✎ 수정사항</b><span class="cnt">' + total() + '</span><span class="tg">' + (panel.classList.contains('open') ? '접기 ▾' : '펼치기 ▴') + '</span></div>' +
       '<div class="pb">' +
       '<div class="mode"><label><input type="checkbox" ' + (settings.mode ? 'checked' : '') + '> 우클릭으로 메모 남기기</label><span class="hint">Shift+우클릭 = 기본 메뉴</span></div>' +
       (SYNC ? '<div class="sync"><span class="dot' + (syncState.loading ? ' busy' : (syncState.ok ? '' : ' off')) + '"></span>' + (syncState.loading ? '공유 서버와 동기화 중… (저장된 목록을 먼저 보여줍니다)' : (syncState.ok ? '공유 모드 · 마지막 동기화 ' + syncState.at : '공유 서버 연결 안 됨 · 저장된 목록 표시')) + '<span class="me" data-t="who">' + esc(me() || '이름 설정') + '</span></div>' : '') +
-      '<div class="list">' + (list.length ? list.map(function (n, i) {
-        var mine = isMine(n);
-        return '<div class="it' + (mine ? '' : ' theirs') + '" data-id="' + n.id + '"><span class="n">' + (i + 1) + '</span><div class="t"><div class="w">' + esc(n.label) + '</div>' + (n.author ? '<div class="a">' + esc(n.author) + ' · ' + esc(fdate(n.updated || n.created)) + '</div>' : '') + '<div class="m">' + esc(n.note) + '</div></div><button class="x" data-del="' + n.id + '" title="삭제">×</button></div>';
-      }).join('') : '<div class="empty">아직 남긴 수정사항이 없습니다.<br>바꾸고 싶은 글자·버튼·영역을 <b>우클릭</b>해 보세요.</div>') + '</div>' +
-      (others ? '<div class="other" data-t="all">다른 페이지의 수정사항 ' + others + '건 — 전체 보기 ›</div>' : '') +
+      '<div class="list">' + (total() ? panelList() : '<div class="empty">아직 남긴 수정사항이 없습니다.<br>바꾸고 싶은 글자·버튼·영역을 <b>우클릭</b>해 보세요.</div>') + '</div>' +
       '<div class="tools">' +
       '<button class="fb-btn p" data-t="all">🗂 전체 보기 (' + total() + ')</button>' +
       '<button class="fb-btn" data-t="copy">📋 전체 복사</button>' +
@@ -364,12 +370,13 @@
     if (t.closest('.ph')) { panel.classList.toggle('open'); localStorage.setItem(KEY + ':open', panel.classList.contains('open') ? 'open' : 'closed'); refresh(); return; }
     if (t.matches('.mode input')) { settings.mode = t.checked; localStorage.setItem(KEY + ':mode', settings.mode ? 'on' : 'off'); document.body.classList.toggle('fb-off', !settings.mode); if (hovered) hovered.classList.remove('fb-hover'); return; }
     var del = t.getAttribute('data-del');
-    if (del) { if (confirm('삭제할까요?')) removeNote(del); return; }
+    if (del) { if (confirm('삭제할까요?')) removeNote(del, t.getAttribute('data-page')); return; }
     var it = t.closest('.it');
     if (it) {
-      var n = notes().filter(function (x) { return x.id === it.getAttribute('data-id'); })[0];
-      var el = n && findByPath(n.path);
-      if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(function () { var r = el.getBoundingClientRect(); openPopup(el, { x: r.left, y: r.bottom }, n); }, 400); }
+      var pg = it.getAttribute('data-page') || PAGE, id = it.getAttribute('data-id');
+      if (pg !== PAGE) { location.href = pg + '#fb=' + encodeURIComponent(id); return; }
+      var n = notes().filter(function (x) { return x.id === id; })[0];
+      if (n) focusNote(n);
       return;
     }
     var tool = t.getAttribute('data-t');
