@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<style id="mp-gate-css">html.mp-locked body>*:not(#mp-gate-ui){display:none!important}</style><script>(function(){var K='mp-gate',P='pundit2026',ok=false;try{ok=localStorage.getItem(K)===P;}catch(e){}if(ok)return;document.documentElement.classList.add('mp-locked');document.addEventListener('DOMContentLoaded',function(){var d=document.createElement('div');d.id='mp-gate-ui';d.innerHTML='<div style="max-width:380px;margin:120px auto;background:#fff;border:1px solid #e5e5e5;border-radius:14px;padding:32px;font:15px/1.6 Pretendard,sans-serif;color:#222;text-align:center"><b style="font-size:20px;display:block;margin-bottom:6px">Mypundit 검토 페이지</b><p style="color:#666;margin:0 0 18px">접속 비밀번호를 입력해 주세요.</p><input id="mp-gate-in" type="password" autocomplete="off" style="width:100%;height:46px;border:1px solid #ccc;border-radius:8px;padding:0 14px;font-size:16px;box-sizing:border-box"><button id="mp-gate-btn" type="button" style="width:100%;height:46px;margin-top:10px;background:#00459b;color:#fff;border:0;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer">입장</button><p id="mp-gate-msg" style="color:#c8401a;font-size:13px;margin:10px 0 0;min-height:18px"></p></div>';document.body.appendChild(d);var i=document.getElementById('mp-gate-in');function go(){if(i.value===P){try{localStorage.setItem(K,P);}catch(e){}d.remove();document.documentElement.classList.remove('mp-locked');}else{document.getElementById('mp-gate-msg').textContent='비밀번호가 맞지 않습니다.';i.select();}}document.getElementById('mp-gate-btn').onclick=go;i.onkeydown=function(e){if(e.key==='Enter')go();};i.focus();});})();</script>
+<style id="mp-gate-css">html.mp-locked body>*:not(#mp-gate-ui){display:none!important}</style><script>(function(){var K='mp-gate',P='pundit2026',ok=false;try{ok=localStorage.getItem(K)===P;}catch(e){}if(ok)return;document.documentElement.classList.add('mp-locked');document.addEventListener('DOMContentLoaded',function(){var d=document.createElement('div');d.id='mp-gate-ui';d.innerHTML='<div style="max-width:380px;margin:120px auto;background:#fff;border:1px solid #e5e5e5;border-radius:14px;padding:32px;font:15px/1.6 Pretendard,sans-serif;color:#222;text-align:center"><b style="font-size:20px;display:block;margin-bottom:6px">Mypundit 검토 페이지</b><p style="color:#666;margin:0 0 18px">접속 비밀번호를 입력해 주세요.</p><input id="mp-gate-in" type="password" autocomplete="off" style="width:100%;height:46px;border:1px solid #ccc;border-radius:8px;padding:0 14px;font-size:16px;box-sizing:border-box"><button id="mp-gate-btn" type="button" style="width:100%;height:46px;margin-top:10px;background:#00459b;color:#fff;border:0;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer">입장</button><p id="mp-gate-msg" style="color:#c8401a;font-size:13px;margin:10px 0 0;min-height:18px"></p></div>';document.body.appendChild(d);var i=document.getElementById('mp-gate-in');function go(){if(i.value===P){try{localStorage.setItem(K,P);}catch(e){}d.remove();document.documentElement.classList.remove('mp-locked');}else{document.getElementById('mp-gate-msg').textContent='비밀번호가 맞지 않습니다.';i.select();}}document.getElementById('mp-gate-btn').onclick=go;i.onkeydown=function(e){if(e.key==='Enter')go();};i.focus();});})();</script><script>window.FB_CONFIG = {"sync": ""};</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Step 2. 워크시트 작성 - 개인정보 | PUNDIT Online System</title>
@@ -9,6 +9,7 @@
 <script src="js/mypundit.js"></script>
 </head>
 <body>
+<div id="rv-banner" style="position:sticky;top:0;z-index:9000;background:#00459b;color:#fff;font:13px/1.5 Pretendard,sans-serif;padding:8px 18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap"><b>검토 방법</b><span>바꾸고 싶은 글자·버튼·입력칸·영역 위에서 <b>마우스 오른쪽 클릭</b> → 메모창이 뜹니다. 요청 내용을 적고 저장하면 그 자리에 번호 뱃지가 붙고 오른쪽 아래 <b>✎ 수정사항</b> 패널에 쌓입니다. 메모는 지금은 이 브라우저에만 저장되므로, 다 적으면 패널의 <b>📋 전체 복사</b>를 눌러 담당자에게 보내 주세요.</span><button onclick="this.parentNode.remove()" style="margin-left:auto;background:#fff;color:#00459b;border:0;border-radius:6px;padding:4px 10px;font-weight:600;cursor:pointer">닫기</button></div>
 <div class="wrap">
   <aside class="sidebar">
     <button type="button" class="side-toggle" title="메뉴 접기/펼치기" aria-label="메뉴 접기/펼치기"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg></button>
@@ -65,7 +66,7 @@
       <div class="statusbar">
         <span class="badge">Step 2</span>
         <span>워크시트 작성</span>
-        <div class="right">작성 진행 중</div>
+        <div class="right"><span>신고 유형</span><b>DSFP</b><span>귀속 연도</span><b>2025년</b></div>
       </div>
       <section class="fold open" data-fold>
         <div class="fold-head">
@@ -386,6 +387,6 @@
   </div>
 </div>
 <!-- 수정사항 남기기 도구 (우클릭). 실제 배포 시 아래 한 줄을 지우면 됩니다. -->
-
+<script src="js/feedback.js"></script>
 </body>
 </html>
