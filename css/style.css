@@ -645,7 +645,9 @@ input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--blue); m
 .prop .simple-head { display: flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 700; margin-bottom: 10px; }
 .prop .cur-pick { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: var(--text-2); white-space: nowrap; }
 .prop .cur-pick .sel { width: 110px; }
-.prop .cur-pick select { height: 36px; font-size: 14px; }
+.prop .cur-pick select { width: 100%; height: 36px; padding: 0 30px 0 12px; border: 1px solid var(--line); border-radius: 8px; background: #fff; font-size: 14px; color: var(--text); }
+.prop .cur-pick .sel::after { right: 12px; width: 6px; height: 6px; margin-top: -5px; }
+.prop .cur-pick .sel.other .cur-other { height: 36px; border: 1px solid var(--line); border-radius: 8px; padding: 0 10px; font-size: 14px; }
 .prop .simple-head .muted { font-size: 13px; font-weight: 500; color: #555; }
 .prop .ledger2 { display: grid; grid-template-columns: 1fr 1.4fr; gap: 20px; align-items: start; }
 .prop .ledger { width: 100%; border-collapse: collapse; }
