@@ -761,3 +761,8 @@ input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--blue); m
 /* 출입국: 날짜 순서 오류 표시 */
 .unit input.bad { border-color: #c8401a; }
 .unit input.bad::placeholder { color: #c8401a; }
+
+/* 출입국: 주신고인과 동일 복사 */
+.copy-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; margin: 18px 0 4px; font-size: 13px; }
+.copy-bar .btn-sm.copy { border-color: var(--blue); color: var(--blue); font-weight: 600; }
+.copy-bar .btn-sm.copy:hover { background: var(--blue); color: #fff; }
