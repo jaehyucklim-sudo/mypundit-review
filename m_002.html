@@ -129,7 +129,7 @@
             box.innerHTML = posts.map(function (p) {
               var d = document.createElement('div'); d.innerHTML = p.title.rendered;
               var fm = (p._embedded && p._embedded['wp:featuredmedia'] || [])[0], sz = fm && fm.media_details && fm.media_details.sizes || {}, img = (sz.thumbnail || sz.medium || {}).source_url || (fm && fm.source_url) || '';
-              return '<a class="kb-item" href="' + esc(p.link) + '" target="_blank" rel="noopener">' + (img ? '<img class="kb-thumb" src="' + esc(img) + '" alt="" onerror="this.style.visibility='hidden'">' : '<span class="kb-thumb"></span>') + '<span class="kb-body"><span class="kb-date">' + esc(p.date.slice(0, 10).replace(/-/g, '. ')) + '</span><b class="kb-title">' + esc(d.textContent) + '</b><span class="kb-ex">' + esc(text(p.excerpt.rendered)) + '</span></span></a>';
+              return '<a class="kb-item" href="' + esc(p.link) + '" target="_blank" rel="noopener">' + (img ? '<img class="kb-thumb" src="' + esc(img) + '" alt="" onerror="this.style.visibility=&quot;hidden&quot;">' : '<span class="kb-thumb"></span>') + '<span class="kb-body"><span class="kb-date">' + esc(p.date.slice(0, 10).replace(/-/g, '. ')) + '</span><b class="kb-title">' + esc(d.textContent) + '</b><span class="kb-ex">' + esc(text(p.excerpt.rendered)) + '</span></span></a>';
             }).join('');
             var src = document.querySelector('[data-kb-src]'); if (src) src.textContent = 'pundit.co.kr 지식창고 · 실시간';
           }).catch(function () {});
