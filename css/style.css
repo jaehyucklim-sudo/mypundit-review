@@ -727,3 +727,12 @@ input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--blue); m
 .kb-ex { display: block; font-size: 13.5px; color: var(--text-2); margin-top: 4px; line-height: 1.55; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .kb-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 14px; font-size: 13px; }
 .kb-foot a { color: var(--blue); font-weight: 600; }
+
+/* 금융계좌: 구성원별 FBAR 없음 */
+.fbar-row { display: flex; align-items: center; margin: 14px 0 12px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+.fbar-row .chkline { font-size: 15px; gap: 10px; cursor: pointer; }
+.fbar-row b { font-weight: 700; }
+.fbar-row .muted { font-size: 14px; }
+.fbar-row:has(input:checked) { border-color: var(--blue); background: var(--blue-pale); }
+.fbar-row:has(input:checked) b { color: var(--blue); }
+.empty-box p.muted { margin-top: 12px; font-size: 14px; }

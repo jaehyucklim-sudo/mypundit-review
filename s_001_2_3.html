@@ -116,7 +116,6 @@
               <div class="panel-tools">
                 <span class="seg-lbl">신고 유형 미리보기</span>
                 <div class="seg"><button type="button" data-mode="regular">정기신고</button><button type="button" class="on" data-mode="sdop">SDOP / SFOP</button></div>
-                <button type="button" class="btn-sm" data-nofbar>FBAR 없음</button>
               </div>
             </div>
             <p class="panel-desc">휴면/소액/잔액 0원/연중 해지 계좌도 모두 등록해 주세요. 왼쪽 목록에서 계좌를 고르면 오른쪽에 그 계좌의 정보와 연도별 잔액·소득을 한 번에 입력합니다. 구성원 이름은 <a href="s_001_2_1.html" class="blue">개인정보</a>에 입력한 내용을 따릅니다.</p>
@@ -159,7 +158,7 @@
             var CLOSE = ['보유중', '2019', '2020', '2021', '2022', '2023', '2024', '2025'];
             var YF = ['max', 'dec', 'int', 'div', 'intw', 'divw'];
             var esc = MP.esc, state = {};   /* state[personId] = { list: [...], sel: 0 } */
-            var noBtn = root.querySelector('[data-nofbar]'), panes = root.querySelector('.panes');
+            var panes = root.querySelector('.panes');
             function curPane() { return panes.querySelector(':scope > [data-pane]:not([hidden])'); }
             function years() { return mode === 'sdop' ? YEARS : [CUR_YEAR]; }
             function blank() { var a = { bank: '', acct: '', cur: '', kind: '', open: '', close: '', status: '', memo: '', y: {} }; YEARS.forEach(function (y) { a.y[y] = {}; }); return a; }
@@ -208,16 +207,18 @@
             }
             function render(pane) { var st = state[pane.dataset.pane]; renderList(pane, st); renderDetail(pane, st); }
             function buildPane(pane, p) {
-              if (!state[p.id]) { state[p.id] = { list: [blank()], sel: 0 }; }
-              pane.innerHTML = '<div class="fin-body"><div class="md"><aside class="md-list"><div class="md-list-head"><span data-count></span><button type="button" class="btn-sm" data-acc-add>+ 추가</button></div><div class="md-items"></div></aside><div class="md-detail"></div></div></div>' +
-                '<div class="fin-empty" hidden><div class="empty-box"><h3>신고할 <span class="blue">해외 금융계좌</span>가 없습니다</h3><label class="chkline"><input type="checkbox"> ' + esc(MP.label(p)) + ' 기준, 신고할 계좌가 없음을 확인합니다.</label><div><button type="button" class="btn-sm" data-back>입력으로 돌아가기</button></div></div></div>';
-              render(pane);
+              if (!state[p.id]) { state[p.id] = { list: [blank()], sel: 0, none: false }; }
+              pane.innerHTML = '<div class="fbar-row"><label class="chkline"><input type="checkbox" data-nofbar' + (state[p.id].none ? ' checked' : '') + '> <b>FBAR 없음</b><span class="muted">— ' + esc(MP.label(p)) + ' 기준으로 신고할 해외 금융계좌가 없습니다</span></label></div>' +
+                '<div class="fin-body"><div class="md"><aside class="md-list"><div class="md-list-head"><span data-count></span><button type="button" class="btn-sm" data-acc-add>+ 추가</button></div><div class="md-items"></div></aside><div class="md-detail"></div></div></div>' +
+                '<div class="fin-empty" hidden><div class="empty-box"><h3>' + esc(MP.label(p)) + ' 기준, 신고할 <span class="blue">해외 금융계좌</span>가 없는 것으로 표시했습니다</h3><p class="muted">계좌를 입력하려면 위의 "FBAR 없음" 체크를 해제하세요.</p></div></div>';
+              render(pane); applyNone(pane);
             }
-            var tabs = MP.personTabs(root, buildPane, { sig: function () { return mode; }, onActivate: updateNoFbar });
-            MP.seg(root, function (m) { mode = m; state = {}; tabs.build(true); });
+            var tabs = MP.personTabs(root, buildPane, { sig: function () { return mode; } });
+            MP.seg(root, function (m) { mode = m; var old = state; state = {}; Object.keys(old).forEach(function (k) { state[k] = { list: [blank()], sel: 0, none: !!old[k].none }; }); tabs.build(true); });
             MP.notes(root);
-            function updateNoFbar() { var p = curPane(); var off = p && !p.querySelector('.fin-empty').hidden; noBtn.classList.toggle('on', !!off); noBtn.textContent = off ? 'FBAR 없음 (선택됨)' : 'FBAR 없음'; }
-            noBtn.addEventListener('click', function () { var p = curPane(); if (!p) return; var e = p.querySelector('.fin-empty'), b = p.querySelector('.fin-body'); var on = e.hidden; e.hidden = !on; b.hidden = on; updateNoFbar(); });
+            /* 구성원별 FBAR 없음: 체크하면 그 사람의 계좌 입력을 접는다 */
+            function applyNone(pane) { var on = pane.querySelector('[data-nofbar]').checked; state[pane.dataset.pane].none = on; pane.querySelector('.fin-empty').hidden = !on; pane.querySelector('.fin-body').hidden = on; }
+            panes.addEventListener('change', function (e) { if (e.target.hasAttribute('data-nofbar')) applyNone(e.target.closest('[data-pane]')); });
             var pullMsg = root.querySelector('[data-pull-msg]');
             function say(t, ok) { pullMsg.textContent = t; pullMsg.hidden = false; pullMsg.classList.toggle('ok', !!ok); }
             root.querySelector('[data-pull]').addEventListener('click', function () {
@@ -243,7 +244,6 @@
             panes.addEventListener('click', function (e) {
               var t = e.target, pane = t.closest('[data-pane]'); if (!pane) return;
               var st = state[pane.dataset.pane];
-              if (t.hasAttribute('data-back')) { pane.querySelector('.fin-empty').hidden = true; pane.querySelector('.fin-body').hidden = false; updateNoFbar(); return; }
               var it = t.closest('.md-item'); if (it) { st.sel = +it.dataset.i; render(pane); return; }
               if (t.hasAttribute('data-acc-add')) { st.list.push(blank()); st.sel = st.list.length - 1; render(pane); var f = pane.querySelector('.md-detail [data-f="bank"]'); if (f) f.focus(); return; }
               if (t.hasAttribute('data-acc-del')) { st.list.splice(st.sel, 1); if (!st.list.length) st.list.push(blank()); st.sel = Math.max(0, Math.min(st.sel, st.list.length - 1)); render(pane); return; }
