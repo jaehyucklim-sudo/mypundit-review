@@ -39,6 +39,7 @@
   function notes() { return db[PAGE] || (db[PAGE] = []); }
   function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
   function now() { var d = new Date(); function p(n) { return (n < 10 ? '0' : '') + n; } return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()); }
+  function fdate(v) { if (!v) return ''; var s = String(v); if (/^\d{4}-\d{2}-\d{2}T/.test(s)) { var d = new Date(s); if (!isNaN(d)) { function p(n) { return (n < 10 ? '0' : '') + n; } return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()); } } return s; }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   /* ---------- 작성자 (공유 모드) ---------- */
@@ -246,7 +247,7 @@
       '<div class="h">' + (existing ? (theirs ? '수정사항 (' + esc(existing.author) + ')' : '수정사항 편집') : '수정사항 남기기') + '<span>' + esc(TITLES[PAGE] || PAGE) + '</span></div>' +
       '<div class="b">' +
       '<div class="where">📍 ' + esc(label) + '</div>' +
-      (existing && existing.author ? '<div class="who">' + esc(existing.author) + ' · ' + esc(existing.updated || existing.created) + '</div>' : '') +
+      (existing && existing.author ? '<div class="who">' + esc(existing.author) + ' · ' + esc(fdate(existing.updated || existing.created)) + '</div>' : '') +
       '<textarea ' + (theirs ? 'readonly ' : '') + 'placeholder="예) 이 문구를 \'워크북 작성\'으로 바꿔주세요 / 이 버튼은 빼주세요 / 색을 더 진하게">' + esc(existing ? existing.note : '') + '</textarea>' +
       '<div class="f">' + (existing ? '<button class="fb-btn d mr" data-a="del">삭제</button>' : '') +
       (theirs ? '<button class="fb-btn mr" data-a="reply">내 메모 추가</button><button class="fb-btn" data-a="cancel">닫기</button>' :
@@ -309,7 +310,7 @@
       (SYNC ? '<div class="sync"><span class="dot' + (syncState.ok ? '' : ' off') + '"></span>' + (syncState.ok ? '공유 모드 · 모든 검토자에게 보입니다' : (syncState.loading ? '공유 서버 연결 중…' : '공유 서버 연결 안 됨')) + '<span class="me" data-t="who">' + esc(me() || '이름 설정') + '</span></div>' : '') +
       '<div class="list">' + (list.length ? list.map(function (n, i) {
         var mine = isMine(n);
-        return '<div class="it' + (mine ? '' : ' theirs') + '" data-id="' + n.id + '"><span class="n">' + (i + 1) + '</span><div class="t"><div class="w">' + esc(n.label) + '</div>' + (n.author ? '<div class="a">' + esc(n.author) + ' · ' + esc(n.updated || n.created) + '</div>' : '') + '<div class="m">' + esc(n.note) + '</div></div><button class="x" data-del="' + n.id + '" title="삭제">×</button></div>';
+        return '<div class="it' + (mine ? '' : ' theirs') + '" data-id="' + n.id + '"><span class="n">' + (i + 1) + '</span><div class="t"><div class="w">' + esc(n.label) + '</div>' + (n.author ? '<div class="a">' + esc(n.author) + ' · ' + esc(fdate(n.updated || n.created)) + '</div>' : '') + '<div class="m">' + esc(n.note) + '</div></div><button class="x" data-del="' + n.id + '" title="삭제">×</button></div>';
       }).join('') : '<div class="empty">아직 남긴 수정사항이 없습니다.<br>바꾸고 싶은 글자·버튼·영역을 <b>우클릭</b>해 보세요.</div>') + '</div>' +
       (others ? '<div class="other">다른 페이지의 수정사항 ' + others + '건은 복사/저장 시 함께 포함됩니다.</div>' : '') +
       '<div class="tools">' +
@@ -354,7 +355,7 @@
       lines.push('[' + p + '] ' + (TITLES[p] || '') + ' — ' + list.length + '건');
       lines.push('');
       list.forEach(function (n, i) {
-        lines.push((i + 1) + '. 위치: ' + n.label + (n.author ? '   (작성: ' + n.author + ' · ' + (n.updated || n.created) + ')' : ''));
+        lines.push((i + 1) + '. 위치: ' + n.label + (n.author ? '   (작성: ' + n.author + ' · ' + fdate(n.updated || n.created) + ')' : ''));
         lines.push('   요청: ' + n.note.replace(/\n/g, '\n         '));
         lines.push('   (선택자: ' + n.path + ')');
         lines.push('');
