@@ -354,7 +354,7 @@
             root.addEventListener('change', function (e) {
               var st = e.target; if (!st.hasAttribute('data-state')) return;
               var f = st.closest('.form-grid').querySelector('[data-ny-doc]'); if (!f) return;
-              var ny = /^NY/.test(st.value); f.hidden = !ny; if (!ny) f.querySelector('input').value = '';
+              var ny = st.value.indexOf('NY - ') === 0; f.hidden = !ny; if (!ny) f.querySelector('input').value = '';
             });
             /* 이민법상 미국신분에서 "기타"를 고르면 직접 입력칸 표시 */
             root.addEventListener('change', function (e) {
