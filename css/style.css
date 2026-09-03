@@ -784,3 +784,6 @@ input.bad-date, .field input.bad-date, .acct input.bad-date { border-color: #c84
 .addr-grid .field.country { grid-column: 1 / -1; max-width: 360px; }
 .addr-grid .field.country select { height: 52px; }
 .addr-grid .field.country .sel.other .cur-other { height: 52px; }
+
+/* hidden 속성은 어떤 display 규칙보다 우선 (미리보기 환경과 동일하게) */
+[hidden] { display: none !important; }
